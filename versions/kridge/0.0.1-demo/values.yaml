@@ -18,18 +18,18 @@ proxyImage:
 
 managerResources:
   limits:
-    cpu: 100m
-    memory: 100Mi
-    ephemeral-storage: 100Mi
+    cpu: 4
+    memory: 8Gi
+    ephemeral-storage: 10Gi
   requests:
-    cpu: 100m
-    memory: 100Mi
-    ephemeral-storage: 100Mi
+    cpu: 4
+    memory: 8Gi
+    ephemeral-storage: 10Gi
 
 proxyResources:
-  cpu: 100m
-  memory: 100Mi
-  ephemeralStorage: 100Mi
+  cpu: 1
+  memory: 2Gi
+  ephemeralStorage: 4Gi
 
 shardingGroupVersionKinds:
   groupVersionKinds:
