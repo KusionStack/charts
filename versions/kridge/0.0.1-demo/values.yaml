@@ -1,0 +1,88 @@
+# Default values for mykridge.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+replicaCount: 3
+
+namespace: kridge
+namesapceEnabled: true
+managerImage:
+  repository: docker.io/chaerr/kridge
+  pullPolicy: IfNotPresent
+  # Overrides the image tag whose default is the chart appVersion.
+  tag: proxy-v0.0.1
+
+proxyImage:
+  repository: docker.io/chaerr/kridge
+  tag: manager-v0.0.1
+
+managerResources:
+  limits:
+    cpu: 100m
+    memory: 100Mi
+    ephemeral-storage: 100Mi
+  requests:
+    cpu: 100m
+    memory: 100Mi
+    ephemeral-storage: 100Mi
+
+proxyResources:
+  cpu: 100m
+  memory: 100Mi
+  ephemeralStorage: 100Mi
+
+shardingGroupVersionKinds:
+  groupVersionKinds:
+    kridge.kusionstack.io/v1alpha1:
+    - '*'
+    v1:
+    - Pod
+    - PersistentVolumeClaim
+    - Service
+    - ConfigMap
+    - Endpoint
+    apps/v1:
+    - StatefulSet
+    - ReplicaSet
+    - ControllerRevision
+
+
+
+
+
+
+imagePullSecrets: []
+nameOverride: ""
+fullnameOverride: ""
+
+serviceAccount:
+  # Specifies whether a service account should be created
+  create: false
+  # Annotations to add to the service account
+  annotations: {}
+  # The name of the service account to use.
+  # If not set and create is true, a name is generated using the fullname template
+  name: ""
+
+
+
+
+ingress:
+  enabled: false
+  className: ""
+  annotations: {}
+    # kubernetes.io/ingress.class: nginx
+    # kubernetes.io/tls-acme: "true"
+  hosts:
+    - host: chart-example.local
+      paths:
+        - path: /
+          pathType: ImplementationSpecific
+  tls: []
+  #  - secretName: chart-example-tls
+  #    hosts:
+  #      - chart-example.local
+
+testDeployment:
+  create: false
+
