@@ -28,11 +28,11 @@ spec:
             - --logtostderr=true
             - --v=4
             - --leader-election-namespace={{ .Values.namespace }}
-            - --proxy-image={{ .Values.proxyImage.repository }}:{{ .Values.proxyImage.tag }}
+            - --proxy-image={{ .Values.proxyImage.repository }}:{{ .Values.imageTag }}
             - --proxy-cpu={{ .Values.proxyResources.cpu }}
             - --proxy-memory={{ .Values.proxyResources.memory }}
             - --proxy-ephemeral-storage={{ .Values.proxyResources.ephemeralStorage }}
-            - --proxy-image-pull-policy=IfNotPresent
+            - --proxy-image-pull-policy={{ .Values.proxyImage.pullPolicy }}
           command:
             - /kridge-manager
           env:
@@ -52,7 +52,7 @@ spec:
               value: secret
             - name: WATCH_ON_LIMIT
               value: 'true'
-          image: {{ .Values.managerImage.repository }}:{{ .Values.managerImage.tag }}
+          image: {{ .Values.managerImage.repository }}:{{ .Values.imageTag }}
           imagePullPolicy: {{ .Values.managerImage.pullPolicy }}
           livenessProbe:
             failureThreshold: 3
