@@ -1,0 +1,82 @@
+{{- if .Values.demoCmEnabled -}}
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: demo
+  namespace: demo-0
+  labels:
+    control-by: demo
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: demo
+  namespace: demo-1
+  labels:
+    control-by: demo
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: demo
+  namespace: demo-2
+  labels:
+    control-by: demo
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: demo
+  namespace: demo-3
+  labels:
+    control-by: demo
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: demo
+  namespace: demo-4
+  labels:
+    control-by: demo
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: demo
+  namespace: demo-5
+  labels:
+    control-by: demo
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: demo
+  namespace: demo-6
+  labels:
+    control-by: demo
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: demo
+  namespace: demo-7
+  labels:
+    control-by: demo
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: demo
+  namespace: demo-8
+  labels:
+    control-by: demo
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: demo
+  namespace: demo-9
+  labels:
+    control-by: demo
+{{- end }}

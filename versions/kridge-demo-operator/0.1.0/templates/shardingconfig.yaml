@@ -1,0 +1,169 @@
+{{- if .Values.shardingConfig.enable -}}
+{{- if eq .Values.shardingConfig.size "x3" -}}
+apiVersion: kridge.kusionstack.io/v1alpha1
+kind: ShardingConfig
+metadata:
+  name: demo-manager-sharding-0
+  namespace: {{ .Values.namespace }}
+spec:
+  controller:
+    leaderElectionName: demo-manager
+  limits:
+  - relateResources:
+    - apiGroups:
+      - '*'
+      resources:
+      - pods
+      - services
+      - configmaps
+    selector:
+      matchExpressions:
+      - key: kridge.kusionstack.io/namespace
+        operator: In
+        values:
+        - demo-0
+      matchLabels:
+        control-by: demo
+  selector:
+    matchExpressions:
+    - key: statefulset.kubernetes.io/pod-name
+      operator: In
+      values:
+      - kridge-demo-operator-0
+---
+apiVersion: kridge.kusionstack.io/v1alpha1
+kind: ShardingConfig
+metadata:
+  name: demo-manager-sharding-1
+  namespace: {{ .Values.namespace }}
+spec:
+  controller:
+    leaderElectionName: demo-manager
+  limits:
+  - relateResources:
+    - apiGroups:
+      - '*'
+      resources:
+      - pods
+      - services
+      - configmaps
+    selector:
+      matchExpressions:
+      - key: kridge.kusionstack.io/namespace
+        operator: NotIn
+        values:
+        - demo-0
+      - key: kridge.kusionstack.io/sharding-hash
+        operator: In
+        values: ["0", "1", "2", "3", "4", "5"]
+      matchLabels:
+        control-by: demo
+  selector:
+    matchExpressions:
+    - key: statefulset.kubernetes.io/pod-name
+      operator: In
+      values:
+      - kridge-demo-operator-1
+      - kridge-demo-operator-2
+---
+apiVersion: kridge.kusionstack.io/v1alpha1
+kind: ShardingConfig
+metadata:
+  name: demo-manager-sharding-2
+  namespace: {{ .Values.namespace }}
+spec:
+  controller:
+    leaderElectionName: demo-manager
+  limits:
+  - relateResources:
+    - apiGroups:
+      - '*'
+      resources:
+      - pods
+      - services
+      - configmaps
+    selector:
+      matchExpressions:
+      - key: kridge.kusionstack.io/namespace
+        operator: NotIn
+        values:
+        - demo-0
+      - key: kridge.kusionstack.io/sharding-hash
+        operator: NotIn
+        values: ["0", "1", "2", "3", "4", "5"]
+      matchLabels:
+        control-by: demo
+  selector:
+    matchExpressions:
+    - key: statefulset.kubernetes.io/pod-name
+      operator: In
+      values:
+      - kridge-demo-operator-3
+      - kridge-demo-operator-4
+{{- end }}
+
+{{- if eq .Values.shardingConfig.size "x2" -}}
+apiVersion: kridge.kusionstack.io/v1alpha1
+kind: ShardingConfig
+metadata:
+  name: demo-manager-sharding-0
+  namespace: {{ .Values.namespace }}
+spec:
+  controller:
+    leaderElectionName: demo-manager
+  limits:
+  - relateResources:
+    - apiGroups:
+      - '*'
+      resources:
+      - pods
+      - services
+      - configmaps
+    selector:
+      matchExpressions:
+      - key: kridge.kusionstack.io/namespace
+        operator: In
+        values:
+        - demo-0
+      matchLabels:
+        control-by: demo
+  selector:
+    matchExpressions:
+    - key: statefulset.kubernetes.io/pod-name
+      operator: In
+      values:
+      - kridge-demo-operator-0
+---
+apiVersion: kridge.kusionstack.io/v1alpha1
+kind: ShardingConfig
+metadata:
+  name: demo-manager-sharding-1
+  namespace: {{ .Values.namespace }}
+spec:
+  controller:
+    leaderElectionName: demo-manager
+  limits:
+  - relateResources:
+    - apiGroups:
+      - '*'
+      resources:
+      - pods
+      - services
+      - configmaps
+    selector:
+      matchExpressions:
+      - key: kridge.kusionstack.io/namespace
+        operator: NotIn
+        values:
+        - demo-0
+      matchLabels:
+        control-by: demo
+  selector:
+    matchExpressions:
+    - key: statefulset.kubernetes.io/pod-name
+      operator: In
+      values:
+      - kridge-demo-operator-1
+      - kridge-demo-operator-2
+{{- end }}
+{{- end }}

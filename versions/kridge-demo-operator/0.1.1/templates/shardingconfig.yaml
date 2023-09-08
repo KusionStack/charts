@@ -1,0 +1,29 @@
+{{- if .Values.sharding.enable -}}
+apiVersion: kridge.kusionstack.io/v1alpha1
+kind: ShardingConfig
+metadata:
+  name: sharding-root
+  namespace: {{ .Values.namespace }}
+spec:
+  root:
+    prefix: operator-demo
+    targetStatefulSet: kridge-demo-operator
+    canary:
+      replicas: 1
+      inNamespaces:
+      - demo-0
+    auto:
+      everyShardReplicas: 2
+      shardingSize: {{ .Values.sharding.size }}
+    resourceSelector:
+    - relateResources:
+      - apiGroups:
+        - '*'
+        resources:
+        - configmaps
+      selector:
+        matchLabels:
+          control-by: demo
+  controller:
+    leaderElectionName: demo-manager
+{{- end }}

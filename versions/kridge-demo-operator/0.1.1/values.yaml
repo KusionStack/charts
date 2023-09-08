@@ -1,0 +1,28 @@
+# Default values for mykridge.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+replicaCount: 5
+
+namespace: kridge
+namesapceEnabled: false
+
+demoNsEnabled: true
+demoCmEnabled: true
+
+sharding:
+  enable: false
+  size: 2
+
+image: chaerr/kridge:demo-operator-v0.1.2
+
+
+resources:
+  limits:
+    cpu: 500m
+    memory: 128Mi
+  requests:
+    cpu: 10m
+    memory: 64Mi
+
+
