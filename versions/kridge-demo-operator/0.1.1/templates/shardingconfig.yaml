@@ -11,7 +11,7 @@ spec:
     canary:
       replicas: 1
       inNamespaces:
-      - demo-0
+      - demo-0a
     auto:
       everyShardReplicas: 2
       shardingSize: {{ .Values.sharding.size }}

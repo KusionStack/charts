@@ -3,75 +3,75 @@
 apiVersion: v1
 kind: Namespace
 metadata:
-  name: demo-0
+  name: demo-0a
 ---
 apiVersion: v1
 kind: Namespace
 metadata:
-  name: demo-1
+  name: demo-0b
 ---
 apiVersion: v1
 kind: Namespace
 metadata:
-  name: demo-2
+  name: demo-0c
 ---
 apiVersion: v1
 kind: Namespace
 metadata:
-  name: demo-3
+  name: demo-0d
 ---
 apiVersion: v1
 kind: Namespace
 metadata:
-  name: demo-4
+  name: demo-0e
 ---
 apiVersion: v1
 kind: Namespace
 metadata:
-  name: demo-5
+  name: demo-0f
 ---
 apiVersion: v1
 kind: Namespace
 metadata:
-  name: demo-6
+  name: demo-0g
 ---
 apiVersion: v1
 kind: Namespace
 metadata:
-  name: demo-7
+  name: demo-0o
 ---
 apiVersion: v1
 kind: Namespace
 metadata:
-  name: demo-8
+  name: demo-0p
 ---
 apiVersion: v1
 kind: Namespace
 metadata:
-  name: demo-9
+  name: demo-0q
 ---
 apiVersion: v1
 kind: Namespace
 metadata:
-  name: demo-21
+  name: demo-0r
 ---
 apiVersion: v1
 kind: Namespace
 metadata:
-  name: demo-22
+  name: demo-0s
 ---
 apiVersion: v1
 kind: Namespace
 metadata:
-  name: demo-23
+  name: demo-0t
 ---
 apiVersion: v1
 kind: Namespace
 metadata:
-  name: demo-24
+  name: demo-0u
 ---
 apiVersion: v1
 kind: Namespace
 metadata:
-  name: demo-25
+  name: demo-0v
 {{- end }}

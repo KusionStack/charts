@@ -4,7 +4,7 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   name: demo
-  namespace: demo-0
+  namespace: demo-0a
   labels:
     control-by: demo
 ---
@@ -12,7 +12,7 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   name: demo
-  namespace: demo-1
+  namespace: demo-0b
   labels:
     control-by: demo
 ---
@@ -20,7 +20,7 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   name: demo
-  namespace: demo-2
+  namespace: demo-0c
   labels:
     control-by: demo
 ---
@@ -28,7 +28,7 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   name: demo
-  namespace: demo-3
+  namespace: demo-0d
   labels:
     control-by: demo
 ---
@@ -36,7 +36,7 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   name: demo
-  namespace: demo-4
+  namespace: demo-0e
   labels:
     control-by: demo
 ---
@@ -44,7 +44,7 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   name: demo
-  namespace: demo-5
+  namespace: demo-0f
   labels:
     control-by: demo
 ---
@@ -52,7 +52,7 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   name: demo
-  namespace: demo-6
+  namespace: demo-0g
   labels:
     control-by: demo
 ---
@@ -60,7 +60,7 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   name: demo
-  namespace: demo-7
+  namespace: demo-0o
   labels:
     control-by: demo
 ---
@@ -68,7 +68,7 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   name: demo
-  namespace: demo-8
+  namespace: demo-0p
   labels:
     control-by: demo
 ---
@@ -76,7 +76,7 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   name: demo
-  namespace: demo-9
+  namespace: demo-0q
   labels:
     control-by: demo
 ---
@@ -84,7 +84,7 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   name: demo
-  namespace: demo-21
+  namespace: demo-0r
   labels:
     control-by: demo
 ---
@@ -92,7 +92,7 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   name: demo
-  namespace: demo-22
+  namespace: demo-0s
   labels:
     control-by: demo
 ---
@@ -100,7 +100,7 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   name: demo
-  namespace: demo-23
+  namespace: demo-0t
   labels:
     control-by: demo
 ---
@@ -108,7 +108,7 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   name: demo
-  namespace: demo-24
+  namespace: demo-0u
   labels:
     control-by: demo
 ---
@@ -116,7 +116,7 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   name: demo
-  namespace: demo-25
+  namespace: demo-0v
   labels:
     control-by: demo
 {{- end }}
