@@ -1,0 +1,6 @@
+{{- if .Values.namesapceEnabled -}}
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: {{ .Values.namespace }}
+{{- end }}
