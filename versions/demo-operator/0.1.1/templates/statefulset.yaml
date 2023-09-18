@@ -1,0 +1,49 @@
+---
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: demo-operator
+  namespace: {{ .Values.namespace }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  revisionHistoryLimit: 10
+  selector:
+    matchLabels:
+      control-plane: demo-operator
+  updateStrategy:
+    type: OnDelete
+  template:
+    metadata:
+      labels:
+        control-plane: demo-operator
+        ctrlmesh.kusionstack.io/watching: 'true'
+        {{- if .Values.sharding.enable}}
+        ctrlmesh.kusionstack.io/enable-proxy: 'true'
+        {{- end}}
+    spec:
+      containers:
+        - command:
+            - /kridge-operator-demo
+          env:
+            - name: POD_NAMESPACE
+              valueFrom:
+                fieldRef:
+                  apiVersion: v1
+                  fieldPath: metadata.namespace
+            - name: POD_NAME
+              valueFrom:
+                fieldRef:
+                  apiVersion: v1
+                  fieldPath: metadata.name
+          name: demo-operator
+          image: {{ .Values.image }}
+          imagePullPolicy: IfNotPresent
+          resources:
+            {{- toYaml .Values.resources | nindent 12 }}
+          securityContext:
+            allowPrivilegeEscalation: false
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+      dnsPolicy: ClusterFirst
+      serviceAccount: demo-operator-serviceaccount
+      serviceAccountName: demo-operator-serviceaccount
