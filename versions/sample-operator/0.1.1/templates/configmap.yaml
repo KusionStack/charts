@@ -119,4 +119,36 @@ metadata:
   namespace: demo-0v
   labels:
     control-by: demo
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: demo
+  namespace: demo-0w
+  labels:
+    control-by: demo
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: demo
+  namespace: demo-0x
+  labels:
+    control-by: demo
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: demo
+  namespace: demo-0y
+  labels:
+    control-by: demo
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: demo
+  namespace: demo-0z
+  labels:
+    control-by: demo
 {{- end }}

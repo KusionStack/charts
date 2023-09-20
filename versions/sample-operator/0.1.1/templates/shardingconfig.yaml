@@ -6,8 +6,8 @@ metadata:
   namespace: {{ .Values.namespace }}
 spec:
   root:
-    prefix: operator-demo
-    targetStatefulSet: demo-operator
+    prefix: sample-demo
+    targetStatefulSet: sample-operator
     canary:
       replicas: 1
       inNamespaces:
