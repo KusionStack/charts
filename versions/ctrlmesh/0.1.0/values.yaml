@@ -1,0 +1,51 @@
+# Default values for Controller Mesh.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+namespace: ctrlmesh
+namespaceEnabled: true
+
+manager:
+  replicas: 2
+  image:
+    repo: kusionstack/ctrlmesh-manager
+    pullPolicy: IfNotPresent
+    tag: v0.1.0
+  resources:
+    limits:
+      cpu: 500m
+      memory: 512Mi
+    requests:
+      cpu: 10m
+      memory: 64Mi
+
+proxy:
+  image:
+    repo: kusionstack/ctrlmesh-proxy
+    pullPolicy: IfNotPresent
+    tag: v0.1.0
+  resources:
+    cpu: 100m
+    memory: 100Mi
+
+init: 
+  image:
+    repo: kusionstack/ctrlmesh-init
+    tag: v0.1.0
+
+shardingGroupVersionKinds:
+groupVersionKinds:
+  ctrlmesh.kusionstack.io/v1alpha1:
+  - '*'
+  v1:
+  - Pod
+  - PersistentVolumeClaim
+  - Service
+  - ConfigMap
+  - Endpoint
+  apps/v1:
+  - StatefulSet
+  - ReplicaSet
+  - ControllerRevision
+
+

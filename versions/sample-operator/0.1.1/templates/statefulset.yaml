@@ -2,20 +2,20 @@
 apiVersion: apps/v1
 kind: StatefulSet
 metadata:
-  name: demo-operator
+  name: sample-operator
   namespace: {{ .Values.namespace }}
 spec:
-  replicas: {{ .Values.replicaCount }}
+  replicas: {{ .Values.managerReplicas }}
   revisionHistoryLimit: 10
   selector:
     matchLabels:
-      control-plane: demo-operator
+      control-plane: sample-operator
   updateStrategy:
     type: OnDelete
   template:
     metadata:
       labels:
-        control-plane: demo-operator
+        control-plane: sample-operator
         ctrlmesh.kusionstack.io/watching: 'true'
         {{- if .Values.sharding.enable}}
         ctrlmesh.kusionstack.io/enable-proxy: 'true'
@@ -35,7 +35,7 @@ spec:
                 fieldRef:
                   apiVersion: v1
                   fieldPath: metadata.name
-          name: demo-operator
+          name: sample-operator
           image: {{ .Values.image }}
           imagePullPolicy: IfNotPresent
           resources:
@@ -45,5 +45,5 @@ spec:
           terminationMessagePath: /dev/termination-log
           terminationMessagePolicy: File
       dnsPolicy: ClusterFirst
-      serviceAccount: demo-operator-serviceaccount
-      serviceAccountName: demo-operator-serviceaccount
+      serviceAccount: sample-operator-serviceaccount
+      serviceAccountName: sample-operator-serviceaccount

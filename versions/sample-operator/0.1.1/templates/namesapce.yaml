@@ -74,4 +74,24 @@ apiVersion: v1
 kind: Namespace
 metadata:
   name: demo-0v
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: demo-0w
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: demo-0x
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: demo-0y
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: demo-0z
 {{- end }}

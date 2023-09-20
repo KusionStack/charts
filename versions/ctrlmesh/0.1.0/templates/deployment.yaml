@@ -6,7 +6,7 @@ metadata:
   name: ctrlmesh
   namespace: {{ .Values.namespace }}
 spec:
-  replicas: {{ .Values.replicaCount }}
+  replicas: {{ .Values.manager.replicas }}
   revisionHistoryLimit: 10
   selector:
     matchLabels:
@@ -28,11 +28,10 @@ spec:
             - --logtostderr=true
             - --v=4
             - --leader-election-namespace={{ .Values.namespace }}
-            - --proxy-image={{ .Values.proxyImage.repository }}:{{ .Values.imageTag }}
-            - --proxy-cpu={{ .Values.proxyResources.cpu }}
-            - --proxy-memory={{ .Values.proxyResources.memory }}
-            - --proxy-ephemeral-storage={{ .Values.proxyResources.ephemeralStorage }}
-            - --proxy-image-pull-policy={{ .Values.proxyImage.pullPolicy }}
+            - --proxy-image={{ .Values.proxy.image.repo }}:{{ .Values.proxy.image.tag }}
+            - --proxy-cpu={{ .Values.proxy.resources.cpu }}
+            - --proxy-memory={{ .Values.proxy.resources.memory }}
+            - --proxy-image-pull-policy={{ .Values.proxy.image.pullPolicy }}
           command:
             - /ctrlmesh-manager
           env:
@@ -52,8 +51,8 @@ spec:
               value: secret
             - name: WATCH_ON_LIMIT
               value: 'true'
-          image: {{ .Values.managerImage.repository }}:{{ .Values.imageTag }}
-          imagePullPolicy: {{ .Values.managerImage.pullPolicy }}
+          image: {{ .Values.manager.image.repo }}:{{ .Values.manager.image.tag }}
+          imagePullPolicy: {{ .Values.manager.image.pullPolicy }}
           livenessProbe:
             failureThreshold: 3
             httpGet:
@@ -76,7 +75,7 @@ spec:
             successThreshold: 1
             timeoutSeconds: 2
           resources:
-            {{- toYaml .Values.managerResources | nindent 12 }}
+            {{- toYaml .Values.manager.resources | nindent 12 }}
           securityContext:
             allowPrivilegeEscalation: false
           terminationMessagePath: /dev/termination-log
