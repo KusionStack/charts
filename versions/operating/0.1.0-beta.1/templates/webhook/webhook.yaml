@@ -1,0 +1,70 @@
+---
+apiVersion: admissionregistration.k8s.io/v1
+kind: MutatingWebhookConfiguration
+metadata:
+  name: kusionstack-controller-manager-mutating
+webhooks:
+- admissionReviewVersions:
+  - v1
+  - v1beta1
+  clientConfig:
+    service:
+      name: kusionstack-controller-manager
+      namespace: {{ .Values.namespace }}
+      path: /mutating-generic
+  failurePolicy: Fail
+  name: mutating-generic.apps.kusionstack.io
+  objectSelector:
+    matchExpressions:
+    - key: podopslifecycle.kusionstack.io/control
+      operator: In
+      values:
+      - "true"
+  rules:
+  - apiGroups:
+    - '*'
+    apiVersions:
+    - v1
+    operations:
+    - CREATE
+    - UPDATE
+    - DELETE
+    resources:
+    - pods
+    - pods/status
+    scope: '*'
+  sideEffects: NoneOnDryRun
+---
+apiVersion: admissionregistration.k8s.io/v1
+kind: ValidatingWebhookConfiguration
+metadata:
+  name: kusionstack-controller-manager-validating
+webhooks:
+- admissionReviewVersions:
+  - v1
+  - v1beta1
+  clientConfig:
+    service:
+      name: kusionstack-controller-manager
+      namespace: {{ .Values.namespace }}
+      path: /validating-generic
+  failurePolicy: Fail
+  name: validating-generic.apps.kusionstack.io
+  objectSelector:
+    matchExpressions:
+    - key: podopslifecycle.kusionstack.io/control
+      operator: In
+      values:
+      - "true"
+  rules:
+  - apiGroups:
+    - '*'
+    apiVersions:
+    - v1
+    operations:
+    - CREATE
+    - UPDATE
+    resources:
+    - pods
+    scope: '*'
+  sideEffects: NoneOnDryRun
