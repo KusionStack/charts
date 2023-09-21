@@ -40,10 +40,6 @@ spec:
           imagePullPolicy: IfNotPresent
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
-          securityContext:
-            allowPrivilegeEscalation: false
-          terminationMessagePath: /dev/termination-log
-          terminationMessagePolicy: File
       dnsPolicy: ClusterFirst
       serviceAccount: sample-operator-serviceaccount
       serviceAccountName: sample-operator-serviceaccount

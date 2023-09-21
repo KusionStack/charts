@@ -1,0 +1,9 @@
+{{- if .Values.namespaceEnabled -}}
+apiVersion: v1
+kind: Namespace
+metadata:
+  labels:
+    {{- toYaml .Values.commonLabels | nindent 4 }}
+    control-plane: {{ .Values.controlPlane }}
+  name: {{ .Values.namespace }}
+{{- end }}
