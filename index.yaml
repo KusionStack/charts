@@ -15,6 +15,18 @@ entries:
     version: 0.1.0
   operating:
   - apiVersion: v1
+    appVersion: 0.1.0-beta.1
+    created: "2023-09-21T06:28:04.861627974Z"
+    description: Helm chart for operating components
+    digest: 378145a783567875c0773fceeb00a13bd9dd9c9dd5fef350ad1fd4bdb947c31d
+    home: https://KusionStack.io
+    name: operating
+    sources:
+    - https://github.com/KusionStack/operating
+    urls:
+    - https://github.com/KusionStack/charts/releases/download/operating-0.1.0-beta.1/operating-0.1.0-beta.1.tgz
+    version: 0.1.0-beta.1
+  - apiVersion: v1
     appVersion: 0.1.0-beta.0
     created: "2023-09-20T06:08:58.980894539Z"
     description: Helm chart for operating components
@@ -28,6 +40,16 @@ entries:
     version: 0.1.0-beta.0
   sample-operator:
   - apiVersion: v1
+    appVersion: 0.1.2
+    created: "2023-09-21T06:28:05.033646251Z"
+    description: Helm chart for sample operator
+    digest: 30a6694ee21afcff628e81ceaa3d689306286469a22f2b0d2ca0907c6a870688
+    home: https://KusionStack.io
+    name: sample-operator
+    urls:
+    - https://github.com/KusionStack/charts/releases/download/sample-operator-0.1.2/sample-operator-0.1.2.tgz
+    version: 0.1.2
+  - apiVersion: v1
     appVersion: 0.1.1
     created: "2023-09-20T06:08:59.155983615Z"
     description: Helm chart for sample operator
@@ -37,4 +59,4 @@ entries:
     urls:
     - https://github.com/KusionStack/charts/releases/download/sample-operator-0.1.1/sample-operator-0.1.1.tgz
     version: 0.1.1
-generated: "2023-09-20T06:08:59.156202117Z"
+generated: "2023-09-21T06:28:05.034888605Z"
