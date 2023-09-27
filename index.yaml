@@ -15,6 +15,18 @@ entries:
     version: 0.1.0
   operating:
   - apiVersion: v1
+    appVersion: 0.1.0
+    created: "2023-09-27T10:29:07.342529285Z"
+    description: Helm chart for KusionStack Operating
+    digest: 740d8e29a5d37521e390ed6ee7e9a71e8922bb27874e94ab32e6228babde7c5a
+    home: https://KusionStack.io
+    name: operating
+    sources:
+    - https://github.com/KusionStack/operating
+    urls:
+    - https://github.com/KusionStack/charts/releases/download/operating-0.1.0/operating-0.1.0.tgz
+    version: 0.1.0
+  - apiVersion: v1
     appVersion: 0.1.0-beta.1
     created: "2023-09-21T06:28:04.861627974Z"
     description: Helm chart for operating components
@@ -59,4 +71,4 @@ entries:
     urls:
     - https://github.com/KusionStack/charts/releases/download/sample-operator-0.1.1/sample-operator-0.1.1.tgz
     version: 0.1.1
-generated: "2023-09-21T06:28:05.034888605Z"
+generated: "2023-09-27T10:29:07.342895586Z"
