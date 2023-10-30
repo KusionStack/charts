@@ -1,0 +1,18 @@
+
+
+ShardingConfig options are enabled.
+
+Default values:
+```
+sharding:
+    enabled: false  # Apply a default ShardingConfig
+    isDemo: false   # Create some demo namespace
+    replicas: 5     # StatefulSet Replicas
+    size: 2         # Sharding Size
+```
+
+You can enable ShardingConfig with 
+  $helm install ctrlmesh kusionstack/ctrlmesh --version 0.1.1 --set sharding.enabled=true
+
+KusionStack Operating v0.1.1 installed successfully.
+Welcome! ^_^
