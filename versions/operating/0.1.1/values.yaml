@@ -1,0 +1,38 @@
+# Default values for mykridge.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+managerReplicas: 3
+
+project: operating
+namespace: kusionstack-system
+namespaceEnabled: true
+
+sharding:
+  enabled: false
+  isDemo: false
+  replicas: 5
+  size: 2
+
+
+controlPlane: kusionstack-operating
+
+image:
+  tag: v0.1.1
+  repo: kusionstack/operating
+  pullPolicy: IfNotPresent
+
+resources:
+  limits:
+    cpu: 500m
+    memory: 128Mi
+  requests:
+    cpu: 10m
+    memory: 64Mi
+
+commonLabels:
+  app.kubernetes.io/part-of: operating
+
+
+
+
