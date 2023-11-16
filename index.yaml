@@ -1,5 +1,18 @@
 apiVersion: v1
 entries:
+  ctrlmesh:
+  - apiVersion: v1
+    appVersion: 0.1.0
+    created: "2023-11-16T13:55:20.003723971Z"
+    description: Helm chart for Controller-Mesh components
+    digest: 94c3a252b33a1d87a091f959fbac253481b7689ad44c25a24dbbc26f145e9228
+    home: https://KusionStack.io
+    name: ctrlmesh
+    sources:
+    - https://github.com/KusionStack/controllermesh
+    urls:
+    - https://github.com/KusionStack/charts/releases/download/ctrlmesh-0.1.0/ctrlmesh-0.1.0.tgz
+    version: 0.1.0
   operating:
   - apiVersion: v1
     appVersion: 0.1.1
@@ -70,4 +83,4 @@ entries:
     urls:
     - https://github.com/KusionStack/charts/releases/download/sample-operator-0.1.1/sample-operator-0.1.1.tgz
     version: 0.1.1
-generated: "2023-10-30T10:22:53.959534475Z"
+generated: "2023-11-16T13:55:20.003747856Z"
