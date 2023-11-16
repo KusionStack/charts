@@ -19,11 +19,12 @@ jobs:
       - name: Set up python
         uses: actions/setup-python@v4
         with:
-          python-version: 3.7
+          python-version: '3.10'
+          check-latest: true
 
       - name: Setup Chart Linting
         id: lint
-        uses: helm/chart-testing-action@v2.4.0
+        uses: helm/chart-testing-action@v2.6.0
 
       - name: List changed charts
         id: list-changed
@@ -34,6 +35,7 @@ jobs:
           if [[ -n "$changed" ]]; then
             echo "::set-output name=changed::true"
             echo "::set-output name=changed_charts::$charts"
+            echo "changed=true" >> "$GITHUB_OUTPUT"
           fi
       - name: Run chart-testing (lint)
         run: ct lint --debug --config ./.github/configs/ct-lint.yaml --lint-conf ./.github/configs/lintconf.yaml

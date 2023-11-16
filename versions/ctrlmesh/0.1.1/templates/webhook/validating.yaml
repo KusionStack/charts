@@ -1,0 +1,28 @@
+
+apiVersion: admissionregistration.k8s.io/v1
+kind: ValidatingWebhookConfiguration
+metadata:
+  name: ctrlmesh-validating
+webhooks:
+- admissionReviewVersions:
+  - v1
+  - v1beta1
+  clientConfig:
+    service:
+      name: ctrlmesh-webhook-service
+      namespace: {{ .Values.namespace }}
+      path: /validate-ctrlmesh-shardingconfig
+      port: 443
+  failurePolicy: Fail
+  name: shardingconfigs.ctrlmesh.validating.io
+  rules:
+  - apiGroups:
+    - ctrlmesh.kusionstack.io
+    apiVersions:
+    - v1alpha1
+    operations:
+    - CREATE
+    - UPDATE
+    resources:
+    - shardingconfigs
+  sideEffects: None
