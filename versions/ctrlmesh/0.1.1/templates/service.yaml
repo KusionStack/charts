@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    ctrlmesh.kusionstack.io/ignore-webhook: "true"
+  name: ctrlmesh-webhook-service
+  namespace: {{ .Values.namespace }}
+spec:
+  ports:
+    - port: 443
+      protocol: TCP
+      targetPort: 9443
+  selector:
+    control-plane: ctrlmesh
+  type: NodePort

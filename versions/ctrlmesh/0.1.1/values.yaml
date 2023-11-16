@@ -10,7 +10,8 @@ manager:
   image:
     repo: kusionstack/ctrlmesh-manager
     pullPolicy: IfNotPresent
-    tag: v0.1.0
+    tag: v0.1.1
+    tag: manager-231116-1
   resources:
     limits:
       cpu: 500m
@@ -23,7 +24,7 @@ proxy:
   image:
     repo: kusionstack/ctrlmesh-proxy
     pullPolicy: IfNotPresent
-    tag: v0.1.0
+    tag: v0.1.1
   resources:
     cpu: 100m
     memory: 100Mi
@@ -31,7 +32,7 @@ proxy:
 init: 
   image:
     repo: kusionstack/ctrlmesh-init
-    tag: v0.1.0
+    tag: v0.1.1
 
 shardingGroupVersionKinds:
   groupVersionKinds:
