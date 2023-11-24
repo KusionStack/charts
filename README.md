@@ -6,7 +6,7 @@
 KusionStack Charts is a collection of **community maintained** charts for http://KusionStack.io/ projects. The charts can be added using following command:
 
 ```
-helm repo add kusionstack https://KusionStack.io/charts
+helm repo add kusionstack https://kusionstack.github.io/charts
 ```
 
 ## Contributing
