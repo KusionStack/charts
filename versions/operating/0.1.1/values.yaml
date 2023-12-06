@@ -1,7 +1,3 @@
-# Default values for mykridge.
-# This is a YAML-formatted file.
-# Declare variables to be passed into your templates.
-
 managerReplicas: 3
 
 project: operating
@@ -13,7 +9,6 @@ sharding:
   isDemo: false
   replicas: 5
   size: 2
-
 
 controlPlane: kusionstack-operating
 
