@@ -1,5 +1,4 @@
 
-
 ShardingConfig options are enabled.
 
 Default values:
@@ -11,8 +10,12 @@ sharding:
     size: 2         # Sharding Size
 ```
 
-You can enable ShardingConfig with 
-  $helm install ctrlmesh kusionstack/ctrlmesh --version 0.1.1 --set sharding.enabled=true
+Install the latest ControllerMesh.
+   $helm install ctrlmesh kusionstack/ctrlmesh --version 0.1.2
 
-KusionStack Operating v0.1.1 installed successfully.
+If ControllerMesh is already installed, you can enable ShardingConfig with 
+  $helm install operating kusionstack/operating --version 0.2.0 --set sharding.enabled=true
+
+
+KusionStack Operating v0.2.0 installed successfully.
 Welcome! ^_^
