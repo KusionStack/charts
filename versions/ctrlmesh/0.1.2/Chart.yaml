@@ -1,0 +1,9 @@
+apiVersion: v1
+name: ctrlmesh
+description: Helm chart for Controller-Mesh components
+version: 0.1.2
+appVersion: 0.1.2
+ 
+home: https://KusionStack.io
+sources:
+  - https://github.com/KusionStack/controllermesh
