@@ -13,7 +13,7 @@ spec:
     listKind: PodTransitionRuleList
     plural: podtransitionrules
     shortNames:
-    - rs
+    - ptr
     singular: podtransitionrule
   scope: Namespaced
   versions:
@@ -189,25 +189,41 @@ spec:
                             webhook.
                           properties:
                             caBundle:
-                              description: '`caBundle` is a PEM encoded CA bundle
-                                which will be used to validate the webhook''s server
-                                certificate. If unspecified, system trust roots on
-                                the apiserver are used. After Base64.'
+                              description: CABundle is a PEM encoded CA bundle which
+                                will be used to validate the webhook's server certificate.
                               type: string
-                            intervalSeconds:
-                              description: interval give the request time interval,
-                                default 5s
-                              format: int64
-                              type: integer
-                            traceTimeoutSeconds:
-                              description: timeout give the request time timeout,
-                                default 60s
-                              format: int64
-                              type: integer
+                            poll:
+                              description: Poll is the polling to query url.
+                              properties:
+                                caBundle:
+                                  description: CABundle is a PEM encoded CA bundle
+                                    which will be used to validate the webhook's server
+                                    certificate.
+                                  type: string
+                                intervalSeconds:
+                                  description: Interval give the request time interval,
+                                    default 5s
+                                  format: int64
+                                  type: integer
+                                rawQueryKey:
+                                  description: ReplaceRawQuery used to replace raw
+                                    key. QueryUrl=URL?rawQueryKey=<task-id>, default
+                                    is task-id
+                                  type: string
+                                timeoutSeconds:
+                                  description: TimeoutSeconds give the request time
+                                    timeout, default 60s
+                                  format: int64
+                                  type: integer
+                                url:
+                                  description: URL gives the location of the webhook,
+                                    URL?task-id=<task-id>
+                                  type: string
+                              required:
+                              - url
+                              type: object
                             url:
-                              description: '`url` gives the location of the webhook,
-                                in standard URL form (`scheme://host:port/path`).
-                                Exactly one of `url` or `service` must be specified.'
+                              description: URL gives the location of the webhook.
                               type: string
                           required:
                           - url
@@ -251,6 +267,9 @@ spec:
                                     - fieldPath
                                     type: object
                                     x-kubernetes-map-type: atomic
+                                  type:
+                                    description: Type defines target pod type.
+                                    type: string
                                 type: object
                             type: object
                           type: array
@@ -311,8 +330,10 @@ spec:
                 items:
                   properties:
                     name:
+                      description: Name representing Pod name
                       type: string
                     passed:
+                      description: Passed indicates whether the pod passed all rules
                       type: boolean
                     passedRules:
                       items:
@@ -328,6 +349,7 @@ spec:
                         type: object
                       type: array
                     stage:
+                      description: Stage is pod current stage
                       type: string
                   required:
                   - passed
@@ -352,31 +374,15 @@ spec:
                       description: WebhookStatus is the webhook status representing
                         processing progress
                       properties:
-                        itemStatus:
-                          description: PodTransitionRulePodStatus is async request
-                            status representing the info of pods
-                          items:
-                            description: ItemStatus defines async request info of
-                              resources
-                            properties:
-                              name:
-                                description: Name representing the name of pod
-                                type: string
-                              traceId:
-                                description: TraceId representing async request traceId
-                                type: string
-                              webhookChecked:
-                                description: WebhookChecked representing the pod has
-                                  pass check
-                                type: boolean
-                            required:
-                            - webhookChecked
-                            type: object
-                          type: array
-                        traceStates:
-                          description: TraceStates is a list of tracing info
+                        history:
+                          description: History records history taskStates which were
+                            finished or failed. Valid for 10 minutes
                           items:
                             properties:
+                              approved:
+                                items:
+                                  type: string
+                                type: array
                               beginTime:
                                 format: date-time
                                 type: string
@@ -385,7 +391,35 @@ spec:
                                 type: string
                               message:
                                 type: string
-                              traceId:
+                              processing:
+                                items:
+                                  type: string
+                                type: array
+                              taskId:
+                                type: string
+                            type: object
+                          type: array
+                        taskStates:
+                          description: TaskStates is a list of tracing info
+                          items:
+                            properties:
+                              approved:
+                                items:
+                                  type: string
+                                type: array
+                              beginTime:
+                                format: date-time
+                                type: string
+                              lastTime:
+                                format: date-time
+                                type: string
+                              message:
+                                type: string
+                              processing:
+                                items:
+                                  type: string
+                                type: array
+                              taskId:
                                 type: string
                             type: object
                           type: array
