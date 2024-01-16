@@ -34,8 +34,14 @@ webhooks:
       namespace: {{ .Values.namespace }}
       path: /mutate-pod
       port: 443
-  failurePolicy: Ignore
+  failurePolicy: Fail
   name: pod.ctrlmesh.mutating.io
+  objectSelector:
+    matchExpressions:
+    - key: ctrlmesh.kusionstack.io/enable-proxy
+      operator: In
+      values:
+      - "true"
   rules:
   - apiGroups:
     - ""
@@ -77,9 +83,19 @@ webhooks:
     resources:
     - pods
     - services
-    - statefulsets
-    - controllerrevisions
     - configmaps
     - persistentvolumeclaims
     - endpoints
+  - apiGroups:
+    - apps
+    apiVersions:
+    - v1
+    operations:
+    - CREATE
+    - UPDATE
+    resources:
+    - deployments
+    - replicasets
+    - statefulsets
+    - controllerrevisions
   sideEffects: None
