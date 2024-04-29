@@ -37,6 +37,17 @@ entries:
     urls:
     - https://github.com/KusionStack/charts/releases/download/ctrlmesh-0.1.0/ctrlmesh-0.1.0.tgz
     version: 0.1.0
+  karpor:
+  - apiVersion: v2
+    appVersion: 0.3.14-alpha.5
+    created: "2024-04-29T09:50:54.102043494Z"
+    description: A Helm chart for Karpor
+    digest: 0b0bb37d5181880d8290f48d019d20686187d5016c29e2a532f2ae9650c27d38
+    name: karpor
+    type: application
+    urls:
+    - https://github.com/KusionStack/charts/releases/download/karpor-0.3.14-alpha.5/karpor-0.3.14-alpha.5.tgz
+    version: 0.3.14-alpha.5
   operating:
   - apiVersion: v1
     appVersion: 0.3.0
@@ -131,4 +142,4 @@ entries:
     urls:
     - https://github.com/KusionStack/charts/releases/download/sample-operator-0.1.1/sample-operator-0.1.1.tgz
     version: 0.1.1
-generated: "2024-03-30T13:54:13.157694769Z"
+generated: "2024-04-29T09:50:54.102069683Z"
