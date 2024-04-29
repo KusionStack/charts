@@ -3,3 +3,6 @@
 # Declare variables to be passed into your templates.
 
 namespace: karpor
+namespaceEnabled: true
+port: 7443
+tag: 0.3.13

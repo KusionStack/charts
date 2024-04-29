@@ -2,10 +2,10 @@ apiVersion: v1
 kind: Service
 metadata:
   name: karpor-server
-  namespace: karpor
+  namespace: {{ .Values.namespace }}
 spec:
   ports:
-    - port: 7443
+    - port: {{ .Values.port }}
   selector:
     app: karpor-server
 ---
@@ -15,7 +15,7 @@ metadata:
   labels:
     app: karpor-server
   name: karpor-server
-  namespace: karpor
+  namespace: {{ .Values.namespace }}
 spec:
   replicas: 1
   selector:
@@ -31,14 +31,14 @@ spec:
             - --search-storage-type=elasticsearch
             - --elastic-search-addresses=http://elasticsearch.karpor.svc:9200
             - --etcd-servers=http://etcd.karpor.svc:2379
-            - --secure-port=7443
+            - --secure-port={{ .Values.port }}
             - --client-ca-file=/etc/karpor/ca.crt
           command:
             - /karpor
-          image: kusionstack/karpor:latest
+          image: kusionstack/karpor:{{ .Values.tag }}
           name: karpor-server
           ports:
-            - containerPort: 7443
+            - containerPort: {{ .Values.port }}
           volumeMounts:
             - mountPath: /etc/karpor/
               name: karpor-secret

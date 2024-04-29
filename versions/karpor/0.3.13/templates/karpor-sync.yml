@@ -4,7 +4,7 @@ metadata:
   labels:
     app: karpor-syncer
   name: karpor-syncer
-  namespace: karpor
+  namespace: {{ .Values.namespace }}
 spec:
   replicas: 1
   selector:
@@ -24,10 +24,10 @@ spec:
           env:
             - name: KUBECONFIG
               value: /etc/karpor/config
-          image: kusionstack/karpor:latest
+          image: kusionstack/karpor:{{ .Values.tag }}
           name: karpor-server
           ports:
-            - containerPort: 7443
+            - containerPort: {{ .Values.port }}
           volumeMounts:
             - mountPath: /etc/karpor/
               name: karpor-kubeconfig
