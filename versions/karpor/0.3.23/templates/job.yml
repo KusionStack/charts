@@ -14,7 +14,7 @@ spec:
           - /bin/sh
           - -c
           args:
-          - go install github.com/KusionStack/kube-utils/tools/cert-generator@latest && cert-generator --ca-name=karpor-secret --kubeconfig-name=karpor-kubeconfig
+          - go install github.com/KusionStack/karpor/hack/cert-generator@latest && cert-generator --ca-name=karpor-secret --kubeconfig-name=karpor-kubeconfig
       restartPolicy: OnFailure
 ---
 apiVersion: rbac.authorization.k8s.io/v1
