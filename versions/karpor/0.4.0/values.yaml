@@ -5,4 +5,4 @@
 namespace: karpor
 namespaceEnabled: true
 port: 7443
-tag: v0.4.0-rc.1
+tag: v0.4.0
