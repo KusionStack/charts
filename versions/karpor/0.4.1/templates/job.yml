@@ -1,0 +1,42 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: karpor-generate-cert
+  namespace: {{ .Values.namespace }}
+spec:
+  ttlSecondsAfterFinished: 300
+  template:
+    spec:
+      containers:
+        - name: karpor-generate-cert
+          image: golang:1.19
+          command:
+          - /bin/sh
+          - -c
+          args:
+          - go install github.com/KusionStack/karpor/hack/cert-generator@latest && cert-generator --ca-name=karpor-secret --kubeconfig-name=karpor-kubeconfig
+      restartPolicy: OnFailure
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  namespace: {{ .Values.namespace }}
+  name: karpor-generate-cert
+rules:
+  - apiGroups: [""]
+    resources: ["secrets", "configmaps"]
+    verbs: ["*"]
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: karpor-generate-cert
+  namespace: {{ .Values.namespace }}
+subjects:
+  - kind: ServiceAccount
+    name: default
+    namespace: {{ .Values.namespace }}
+roleRef:
+  kind: Role
+  name: karpor-generate-cert
+  apiGroup: rbac.authorization.k8s.io
