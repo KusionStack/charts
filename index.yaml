@@ -51,6 +51,16 @@ entries:
     version: 0.1.0
   karpor:
   - apiVersion: v2
+    appVersion: 0.4.1
+    created: "2024-07-09T02:08:42.051978721Z"
+    description: A Helm chart for Karpor
+    digest: 7c5768be8b3156ca772b3f003c837abce134924aed90eba283d76fe8986e8564
+    name: karpor
+    type: application
+    urls:
+    - https://github.com/KusionStack/charts/releases/download/karpor-0.4.1/karpor-0.4.1.tgz
+    version: 0.4.1
+  - apiVersion: v2
     appVersion: 0.4.0
     created: "2024-07-03T07:51:27.266074582Z"
     description: A Helm chart for Karpor
@@ -256,4 +266,4 @@ entries:
     urls:
     - https://github.com/KusionStack/charts/releases/download/sample-operator-0.1.1/sample-operator-0.1.1.tgz
     version: 0.1.1
-generated: "2024-07-08T10:11:08.783863123Z"
+generated: "2024-07-09T02:08:42.052063369Z"
