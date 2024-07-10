@@ -1,0 +1,86 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    ctrlmesh.kusionstack.io/ignore-webhook: 'true'
+  name: ctrlmesh
+  namespace: {{ .Values.namespace }}
+spec:
+  replicas: {{ .Values.manager.replicas }}
+  revisionHistoryLimit: 10
+  selector:
+    matchLabels:
+      control-plane: ctrlmesh
+  strategy:
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 1
+    type: RollingUpdate
+  template:
+    metadata:
+      labels:
+        control-plane: ctrlmesh
+        ctrlmesh.kusionstack.io/ignore-webhook: 'true'
+        ctrlmesh.kusionstack.io/watching: 'true'
+    spec:
+      containers:
+        - args:
+            - --logtostderr=true
+            - --v=4
+            - --leader-election-namespace={{ .Values.namespace }}
+            - --proxy-image={{ .Values.proxy.image.repo }}:{{ .Values.proxy.image.tag }}
+            - --proxy-cpu={{ .Values.proxy.resources.cpu }}
+            - --proxy-memory={{ .Values.proxy.resources.memory }}
+            - --proxy-image-pull-policy={{ .Values.proxy.image.pullPolicy }}
+            - --init-image={{ .Values.init.image.repo }}:{{ .Values.init.image.tag }}
+          command:
+            - /ctrlmesh-manager
+          env:
+            - name: POD_NAMESPACE
+              valueFrom:
+                fieldRef:
+                  apiVersion: v1
+                  fieldPath: metadata.namespace
+            - name: POD_NAME
+              valueFrom:
+                fieldRef:
+                  apiVersion: v1
+                  fieldPath: metadata.name
+            - name: ENABLE_WEBHOOK_SERVER
+              value: 'true'
+            - name: WEBHOOK_CERT_WRITER
+              value: secret
+            - name: WATCH_ON_LIMIT
+              value: 'true'
+          image: {{ .Values.manager.image.repo }}:{{ .Values.manager.image.tag }}
+          imagePullPolicy: {{ .Values.manager.image.pullPolicy }}
+          livenessProbe:
+            failureThreshold: 3
+            httpGet:
+              path: /healthz
+              port: 8081
+              scheme: HTTP
+            initialDelaySeconds: 15
+            periodSeconds: 20
+            successThreshold: 1
+            timeoutSeconds: 1
+          name: manager
+          readinessProbe:
+            failureThreshold: 3
+            httpGet:
+              path: /delay
+              port: 8083
+              scheme: HTTP
+            initialDelaySeconds: 15
+            periodSeconds: 10
+            successThreshold: 1
+            timeoutSeconds: 2
+          resources:
+            {{- toYaml .Values.manager.resources | nindent 12 }}
+          securityContext:
+            allowPrivilegeEscalation: false
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+      dnsPolicy: ClusterFirst
+      serviceAccount: ctrlmesh-serviceaccount
+      serviceAccountName: ctrlmesh-serviceaccount
