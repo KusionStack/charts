@@ -32,6 +32,7 @@ spec:
             - --proxy-cpu={{ .Values.proxy.resources.cpu }}
             - --proxy-memory={{ .Values.proxy.resources.memory }}
             - --proxy-image-pull-policy={{ .Values.proxy.image.pullPolicy }}
+            - --init-image={{ .Values.init.image.repo }}:{{ .Values.init.image.tag }}
           command:
             - /ctrlmesh-manager
           env:
