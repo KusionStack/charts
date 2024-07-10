@@ -1,0 +1,101 @@
+
+apiVersion: admissionregistration.k8s.io/v1
+kind: MutatingWebhookConfiguration
+metadata:
+  name: ctrlmesh-mutating
+webhooks:
+- admissionReviewVersions:
+  - v1
+  - v1beta1
+  clientConfig:
+    service:
+      name: ctrlmesh-webhook-service
+      namespace: {{ .Values.namespace }}
+      path: /mutate-namespace
+      port: 443
+  failurePolicy: Ignore
+  name: namesapace.ctrlmesh.mutating.io
+  rules:
+  - apiGroups:
+    - ""
+    apiVersions:
+    - v1
+    operations:
+    - CREATE
+    resources:
+    - namespaces
+  sideEffects: None
+- admissionReviewVersions:
+  - v1
+  - v1beta1
+  clientConfig:
+    service:
+      name: ctrlmesh-webhook-service
+      namespace: {{ .Values.namespace }}
+      path: /mutate-pod
+      port: 443
+  failurePolicy: Fail
+  name: pod.ctrlmesh.mutating.io
+  objectSelector:
+    matchExpressions:
+    - key: ctrlmesh.kusionstack.io/enable-proxy
+      operator: In
+      values:
+      - "true"
+  rules:
+  - apiGroups:
+    - ""
+    apiVersions:
+    - v1
+    operations:
+    - CREATE
+    resources:
+    - pods
+  sideEffects: None
+- admissionReviewVersions:
+  - v1
+  - v1beta1
+  clientConfig:
+    service:
+      name: ctrlmesh-webhook-service
+      namespace: {{ .Values.namespace }}
+      path: /mutate-resource
+      port: 443
+  failurePolicy: Ignore
+  name: resource.ctrlmesh.mutating.io
+  rules:
+  - apiGroups:
+    - apps.kusionstack.io
+    apiVersions:
+    - "*"
+    operations:
+    - CREATE
+    - UPDATE
+    resources:
+    - "*"
+  - apiGroups:
+    - ""
+    apiVersions:
+    - v1
+    operations:
+    - CREATE
+    - UPDATE
+    resources:
+    - pods
+    - services
+    - configmaps
+    - persistentvolumeclaims
+    - endpoints
+  - apiGroups:
+    - apps
+    apiVersions:
+    - v1
+    operations:
+    - CREATE
+    - UPDATE
+    resources:
+    - deployments
+    - replicasets
+    - statefulsets
+    - controllerrevisions
+  sideEffects: None
