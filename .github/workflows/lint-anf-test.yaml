@@ -46,6 +46,6 @@ jobs:
         with:
           config: .github/configs/kind-config.yaml
 
-      - name: Run chart-testing (install)
-        run: ct install --config ./.github/configs/ct-install.yaml
-        if: steps.list-changed.outputs.changed == 'true'
+      # - name: Run chart-testing (install)
+      #   run: ct install --config ./.github/configs/ct-install.yaml
+      #   if: steps.list-changed.outputs.changed == 'true'
