@@ -31,20 +31,32 @@ $ helm repo update
 $ helm install karpor kusionstack/karpor
 ```
 
-## General parameters
+**Note** that installing this chart directly means it will use the [default template values](./values.yaml) for Karpor.
+
+You may have to set your specific configurations if it is deployed into a production cluster, or you want to custom configure `resources`, `replicas`, `port` etc.
+
+```bash
+$ helm install my-release kusionstack/karpor --set server.replicas=3 --set syncer.port=7654
+```
+
+## Chart Parameters
+
+The following table lists the configurable parameters of the chart and their default values.
+
+### General Parameters
 
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
 | namespace | string | `"karpor"` | Which namespace to be deployed. |
 | namespaceEnabled | bool | `true` | Whether to generate namespace. |
 
-## Global Configs
+### Global Parameters
 
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
 | global.image.imagePullPolicy | string | `"IfNotPresent"` | Image pull policy to be applied to all Karpor components. |
 
-## Karpor Server
+### Karpor Server
 
 The Karpor Server Component is main backend server. It itself is an `apiserver`, which also provides `/rest-api` to serve Dashboard.
 
@@ -55,7 +67,7 @@ The Karpor Server Component is main backend server. It itself is an `apiserver`,
 | server.name | string | `"karpor-server"` | Component name for Karpor server. |
 | server.port | int | `7443` | Port for Karpor server. |
 
-## Karpor Syncer
+### Karpor Syncer
 
 The Karpor Syncer Component is independent server to synchronize cluster resources in real-time.
 
@@ -66,7 +78,7 @@ The Karpor Syncer Component is independent server to synchronize cluster resourc
 | syncer.name | string | `"karpor-syncer"` | Component name for Karpor syncer. |
 | syncer.port | int | `7443` | Port for Karpor syncer. |
 
-## ElasticSearch
+### ElasticSearch
 
 The ElasticSearch Component to store the synchronized resources and user data.
 
@@ -77,7 +89,7 @@ The ElasticSearch Component to store the synchronized resources and user data.
 | elasticsearch.name | string | `"elasticsearch"` | Component name for ElasticSearch. |
 | elasticsearch.port | int | `9200` | Port for ElasticSearch. |
 
-## ETCD
+### ETCD
 
 The ETCD Component is the storage of Karpor Server as `apiserver`.
 
@@ -88,7 +100,7 @@ The ETCD Component is the storage of Karpor Server as `apiserver`.
 | etcd.name | string | `"etcd"` | Component name for ETCD. |
 | etcd.port | int | `2379` | Port for ETCD. |
 
-## Job
+### Job
 
 This one-time job is used to generate root certificates and some preliminary work.
 
