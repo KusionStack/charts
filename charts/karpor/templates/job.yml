@@ -9,7 +9,8 @@ spec:
     spec:
       containers:
         - name: karpor-generate-cert
-          image: golang:1.19
+          image: {{ .Values.job.image.repo }}:{{ .Values.job.image.tag }}
+          imagePullPolicy: {{ .Values.global.image.imagePullPolicy }} 
           command:
           - /bin/sh
           - -c

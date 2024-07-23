@@ -5,38 +5,41 @@ metadata:
   namespace: {{ .Values.namespace }}
 spec:
   ports:
-    - port: 2379
+    - port: {{ .Values.etcd.port }}
   selector:
-    app: etcd
+    {{- include "karpor.selectorLabels" (dict "context" . "component" .Values.etcd.name) | nindent 4 }}
 ---
 apiVersion: apps/v1
 kind: StatefulSet
 metadata:
   name: etcd
   namespace: {{ .Values.namespace }}
+  labels:
+    {{- include "karpor.labels" (dict "context" . "component" .Values.etcd.name) | nindent 4 }}
 spec:
   serviceName: etcd
   replicas: 1
   selector:
     matchLabels:
-      app: etcd
+      {{- include "karpor.selectorLabels" (dict "context" . "component" .Values.etcd.name) | nindent 6 }}
   template:
     metadata:
       labels:
-        app: etcd
+        {{- include "karpor.selectorLabels" (dict "context" . "component" .Values.etcd.name) | nindent 8 }}
     spec:
       containers:
         - name: etcd
-          image: quay.io/coreos/etcd:v3.5.11
+          image: {{ .Values.etcd.image.repo }}:{{ .Values.etcd.image.tag }}
+          imagePullPolicy: {{ .Values.global.image.imagePullPolicy }} 
           command:
             - /usr/local/bin/etcd
-            - --listen-client-urls=http://0.0.0.0:2379
-            - --advertise-client-urls=http://localhost:2379
+            - --listen-client-urls=http://0.0.0.0:{{ .Values.etcd.port }}
+            - --advertise-client-urls=http://localhost:{{ .Values.etcd.port }}
           env:
             - name: ETCD_DATA_DIR
               value: /etcd-data/default.etcd
           ports:
-            - containerPort: 2379
+            - containerPort: {{ .Values.etcd.port }} 
           volumeMounts:
             - name: data
               mountPath: /etcd-data

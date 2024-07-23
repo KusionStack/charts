@@ -4,5 +4,56 @@
 
 namespace: karpor
 namespaceEnabled: true
-port: 7443
-tag: v0.4.2
+
+## Globally shared configuration
+global:
+  image:
+    # -- If defined, a imagePullPolicy applied to all Karpor deployments
+    imagePullPolicy: IfNotPresent
+
+## Karpor server configuration
+server:
+  name: karpor-server
+  image:
+    # -- If defined, a repository applied to all Karpor deployments
+    repo: kusionstack/karpor 
+    # -- Overrides the global Karpor image tag whose default is the chart appVersion
+    tag: ""
+  port: 7443
+
+## Karpor syncer configuration
+syncer:
+  name: karpor-syncer
+  image:
+    # -- If defined, a repository applied to all Karpor deployments
+    repo: kusionstack/karpor 
+    # -- Overrides the global Karpor image tag whose default is the chart appVersion
+    tag: ""
+  port: 7443
+
+## ElasticSearch configuration
+elasticsearch:
+  name: elasticsearch 
+  image:
+    # -- If defined, a repository applied to all Karpor deployments
+    repo: docker.elastic.co/elasticsearch/elasticsearch
+    tag: "8.6.2"
+  port: 9200
+
+## ETCD configuration
+etcd:
+  name: etcd
+  image:
+    # -- If defined, a repository applied to all Karpor deployments
+    repo: quay.io/coreos/etcd
+    # -- Overrides the global Karpor image tag whose default is the chart appVersion
+    tag: "v3.5.11"
+  port: 2379 
+
+## Job configuration
+job:
+  image:
+    # -- If defined, a repository applied to all Karpor deployments
+    repo: golang
+    # -- Overrides the global Karpor image tag whose default is the chart appVersion
+    tag: "1.19"

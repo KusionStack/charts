@@ -5,40 +5,41 @@ metadata:
   namespace: {{ .Values.namespace }}
 spec:
   ports:
-    - port: {{ .Values.port }}
+    - port: {{ .Values.server.port }}
   selector:
-    app: karpor-server
+    {{- include "karpor.selectorLabels" (dict "context" . "component" .Values.server.name) | nindent 4 }}
 ---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
   labels:
-    app: karpor-server
+    {{- include "karpor.labels" (dict "context" . "component" .Values.server.name) | nindent 4 }}
   name: karpor-server
   namespace: {{ .Values.namespace }}
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: karpor-server
+      {{- include "karpor.selectorLabels" (dict "context" . "component" .Values.server.name) | nindent 6 }}
   template:
     metadata:
       labels:
-        app: karpor-server
+        {{- include "karpor.selectorLabels" (dict "context" . "component" .Values.server.name) | nindent 8 }}
     spec:
       containers:
         - args:
             - --search-storage-type=elasticsearch
-            - --elastic-search-addresses=http://elasticsearch.karpor.svc:9200
-            - --etcd-servers=http://etcd.karpor.svc:2379
-            - --secure-port={{ .Values.port }}
+            - --elastic-search-addresses=http://elasticsearch.{{ .Values.namespace }}.svc:{{ .Values.elasticsearch.port }}
+            - --etcd-servers=http://etcd.{{ .Values.namespace }}.svc:{{ .Values.etcd.port }}
+            - --secure-port={{ .Values.server.port }}
             - --client-ca-file=/etc/karpor/ca.crt
           command:
             - /karpor
-          image: kusionstack/karpor:{{ .Values.tag }}
+          image: {{ .Values.server.image.repo }}:v{{ default .Chart.AppVersion .Values.server.image.tag }}
+          imagePullPolicy: {{ .Values.global.image.imagePullPolicy }} 
           name: karpor-server
           ports:
-            - containerPort: {{ .Values.port }}
+            - containerPort: {{ .Values.server.port }}
           volumeMounts:
             - mountPath: /etc/karpor/
               name: karpor-secret
