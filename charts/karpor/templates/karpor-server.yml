@@ -17,7 +17,7 @@ metadata:
   name: karpor-server
   namespace: {{ .Values.namespace }}
 spec:
-  replicas: 1
+  replicas: {{ .Values.server.replicas }}
   selector:
     matchLabels:
       {{- include "karpor.selectorLabels" (dict "context" . "component" .Values.server.name) | nindent 6 }}
@@ -43,6 +43,8 @@ spec:
           volumeMounts:
             - mountPath: /etc/karpor/
               name: karpor-secret
+          resources:
+            {{- toYaml .Values.server.resources | nindent 12 }}
       volumes:
         - name: karpor-secret
           secret:

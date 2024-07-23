@@ -1,6 +1,6 @@
 # Karpor Chart
 
-![Version: 0.5.1](https://img.shields.io/badge/Version-0.5.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 0.4.2](https://img.shields.io/badge/AppVersion-0.4.2-informational?style=flat-square)
+![Version: 0.5.2](https://img.shields.io/badge/Version-0.5.2-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 0.4.2](https://img.shields.io/badge/AppVersion-0.4.2-informational?style=flat-square)
 
 A Helm chart for Karpor, a modern kubernetes visualization tool.
 
@@ -65,8 +65,10 @@ The Karpor Server Component is main backend server. It itself is an `apiserver`,
 |-----|------|---------|-------------|
 | server.image.repo | string | `"kusionstack/karpor"` | Repository for Karpor server image. |
 | server.image.tag | string | `""` | Tag for Karpor server image. Defaults to the chart's appVersion if not specified. |
-| server.name | string | `"karpor-server"` | Component name for Karpor server. |
-| server.port | int | `7443` | Port for Karpor server. |
+| server.name | string | `"karpor-server"` | Component name for karpor server. |
+| server.port | int | `7443` | Port for karpor server. |
+| server.replicas | int | `1` | The number of karpor server pods to run. |
+| server.resources | object | `{"limits":{"cpu":"500m","ephemeral-storage":"10Gi","memory":"1Gi"},"requests":{"cpu":"250m","ephemeral-storage":"2Gi","memory":"256Mi"}}` | Resource limits and requests for the karpor server pods. |
 
 ### Karpor Syncer
 
@@ -78,6 +80,8 @@ The Karpor Syncer Component is independent server to synchronize cluster resourc
 | syncer.image.tag | string | `""` | Tag for Karpor syncer image. Defaults to the chart's appVersion if not specified. |
 | syncer.name | string | `"karpor-syncer"` | Component name for Karpor syncer. |
 | syncer.port | int | `7443` | Port for Karpor syncer. |
+| syncer.replicas | int | `1` | The number of karpor syncer pods to run. |
+| syncer.resources | object | `{"limits":{"cpu":"500m","ephemeral-storage":"10Gi","memory":"1Gi"},"requests":{"cpu":"250m","ephemeral-storage":"2Gi","memory":"256Mi"}}` | Resource limits and requests for the karpor syncer pods. |
 
 ### ElasticSearch
 
@@ -89,6 +93,8 @@ The ElasticSearch Component to store the synchronized resources and user data.
 | elasticsearch.image.tag | string | `"8.6.2"` | Specific tag for ElasticSearch image. |
 | elasticsearch.name | string | `"elasticsearch"` | Component name for ElasticSearch. |
 | elasticsearch.port | int | `9200` | Port for ElasticSearch. |
+| elasticsearch.replicas | int | `1` | The number of ElasticSearch pods to run. |
+| elasticsearch.resources | object | `{"limits":{"cpu":"2","ephemeral-storage":"10Gi","memory":"4Gi"},"requests":{"cpu":"2","ephemeral-storage":"10Gi","memory":"4Gi"}}` | Resource limits and requests for the karpor elasticsearch pods. |
 
 ### ETCD
 
@@ -100,6 +106,8 @@ The ETCD Component is the storage of Karpor Server as `apiserver`.
 | etcd.image.tag | string | `"v3.5.11"` | Specific tag for ETCD image. |
 | etcd.name | string | `"etcd"` | Component name for ETCD. |
 | etcd.port | int | `2379` | Port for ETCD. |
+| etcd.replicas | int | `1` | The number of etcd pods to run. |
+| etcd.resources | object | `{"limits":{"cpu":"500m","ephemeral-storage":"10Gi","memory":"1Gi"},"requests":{"cpu":"250m","ephemeral-storage":"2Gi","memory":"256Mi"}}` | Resource limits and requests for the karpor etcd pods. |
 
 ### Job
 

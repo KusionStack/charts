@@ -18,7 +18,7 @@ metadata:
     {{- include "karpor.labels" (dict "context" . "component" .Values.etcd.name) | nindent 4 }}
 spec:
   serviceName: etcd
-  replicas: 1
+  replicas: {{ .Values.etcd.replicas }}
   selector:
     matchLabels:
       {{- include "karpor.selectorLabels" (dict "context" . "component" .Values.etcd.name) | nindent 6 }}
@@ -43,6 +43,8 @@ spec:
           volumeMounts:
             - name: data
               mountPath: /etcd-data
+          resources:
+            {{- toYaml .Values.etcd.resources | nindent 12 }}
   volumeClaimTemplates:
     - metadata:
         name: data
