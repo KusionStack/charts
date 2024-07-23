@@ -19,7 +19,7 @@ server:
   name: karpor-server
   image:
     # -- Repository for Karpor server image.
-    repo: kusionstack/karpor 
+    repo: kusionstack/karpor
     # -- Tag for Karpor server image. Defaults to the chart's appVersion if not specified.
     tag: ""
   # -- Port for Karpor server.
@@ -31,7 +31,7 @@ syncer:
   name: karpor-syncer
   image:
     # -- Repository for Karpor syncer image.
-    repo: kusionstack/karpor 
+    repo: kusionstack/karpor
     # -- Tag for Karpor syncer image. Defaults to the chart's appVersion if not specified.
     tag: ""
   # -- Port for Karpor syncer.
@@ -40,7 +40,7 @@ syncer:
 # Configuration for ElasticSearch
 elasticsearch:
   # -- Component name for ElasticSearch.
-  name: elasticsearch 
+  name: elasticsearch
   image:
     # -- Repository for ElasticSearch image.
     repo: docker.elastic.co/elasticsearch/elasticsearch
@@ -59,7 +59,7 @@ etcd:
     # -- Specific tag for ETCD image.
     tag: "v3.5.11"
   # -- Port for ETCD.
-  port: 2379 
+  port: 2379
 
 # Configuration for Jobs
 job:

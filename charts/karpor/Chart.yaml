@@ -1,5 +1,5 @@
 # The fields explain in the Chart.yaml can refer:
-# https://helm.sh/docs/topics/charts/#the-chartyaml-file 
+# https://helm.sh/docs/topics/charts/#the-chartyaml-file
 apiVersion: v2
 name: karpor
 # The Chart Version
