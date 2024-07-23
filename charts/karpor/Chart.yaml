@@ -12,6 +12,7 @@ home: https://github.com/KusionStack/karpor
 icon: https://kusionstack.io/karpor/assets/logo/logo.svg
 maintainers:
 - name: kusionstack
+  email: kusionstack@gmail.com
   url: https://kusionstack.io/karpor
 sources:
   - https://github.com/KusionStack/charts/tree/master/charts/karpor

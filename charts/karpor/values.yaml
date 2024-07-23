@@ -2,58 +2,69 @@
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
 
+# -- Which namespace to be deployed.
 namespace: karpor
+# -- Whether to generate namespace.
 namespaceEnabled: true
 
-## Globally shared configuration
+# Global configuration for Karpor components
 global:
   image:
-    # -- If defined, a imagePullPolicy applied to all Karpor deployments
+    # -- Image pull policy to be applied to all Karpor components.
     imagePullPolicy: IfNotPresent
 
-## Karpor server configuration
+# Configuration for Karpor server
 server:
+  # -- Component name for Karpor server.
   name: karpor-server
   image:
-    # -- If defined, a repository applied to all Karpor deployments
+    # -- Repository for Karpor server image.
     repo: kusionstack/karpor 
-    # -- Overrides the global Karpor image tag whose default is the chart appVersion
+    # -- Tag for Karpor server image. Defaults to the chart's appVersion if not specified.
     tag: ""
+  # -- Port for Karpor server.
   port: 7443
 
-## Karpor syncer configuration
+# Configuration for Karpor syncer
 syncer:
+  # -- Component name for Karpor syncer.
   name: karpor-syncer
   image:
-    # -- If defined, a repository applied to all Karpor deployments
+    # -- Repository for Karpor syncer image.
     repo: kusionstack/karpor 
-    # -- Overrides the global Karpor image tag whose default is the chart appVersion
+    # -- Tag for Karpor syncer image. Defaults to the chart's appVersion if not specified.
     tag: ""
+  # -- Port for Karpor syncer.
   port: 7443
 
-## ElasticSearch configuration
+# Configuration for ElasticSearch
 elasticsearch:
+  # -- Component name for ElasticSearch.
   name: elasticsearch 
   image:
-    # -- If defined, a repository applied to all Karpor deployments
+    # -- Repository for ElasticSearch image.
     repo: docker.elastic.co/elasticsearch/elasticsearch
+    # -- Specific tag for ElasticSearch image.
     tag: "8.6.2"
+  # -- Port for ElasticSearch.
   port: 9200
 
-## ETCD configuration
+# Configuration for ETCD
 etcd:
+  # -- Component name for ETCD.
   name: etcd
   image:
-    # -- If defined, a repository applied to all Karpor deployments
+    # -- Repository for ETCD image.
     repo: quay.io/coreos/etcd
-    # -- Overrides the global Karpor image tag whose default is the chart appVersion
+    # -- Specific tag for ETCD image.
     tag: "v3.5.11"
+  # -- Port for ETCD.
   port: 2379 
 
-## Job configuration
+# Configuration for Jobs
 job:
   image:
-    # -- If defined, a repository applied to all Karpor deployments
+    # -- Repository for the Job image.
     repo: golang
-    # -- Overrides the global Karpor image tag whose default is the chart appVersion
+    # -- Specific tag for the Job image.
     tag: "1.19"
