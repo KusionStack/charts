@@ -26,3 +26,11 @@ app.kubernetes.io/component: {{ .component }}
 app.kubernetes.io/instance: {{ .context.Release.Name }}
 {{- end }}
 
+{{/*
+Real image.
+*/}}
+{{- define "karpor.realImage" -}}
+{{- trimPrefix "/" (list (trimAll "/" .context.Values.registryProxy)
+.repo | join "/") }}:{{ if .hasV }}v{{ end }}{{ default .context.Chart.AppVersion .tag }}
+{{- end -}}
+

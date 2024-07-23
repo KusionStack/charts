@@ -29,7 +29,7 @@ spec:
     spec:
       containers:
         - name: etcd
-          image: {{ .Values.etcd.image.repo }}:{{ .Values.etcd.image.tag }}
+          image: {{ include "karpor.realImage" (dict "context" . "repo" .Values.etcd.image.repo "tag" .Values.etcd.image.tag) }}
           imagePullPolicy: {{ .Values.global.image.imagePullPolicy }} 
           command:
             - /usr/local/bin/etcd

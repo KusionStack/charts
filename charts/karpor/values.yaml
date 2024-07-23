@@ -6,6 +6,8 @@
 namespace: karpor
 # -- Whether to generate namespace.
 namespaceEnabled: true
+# -- Image registry proxy will be the prefix as all component image.
+registryProxy: ""
 
 # Global configuration for Karpor components
 global:

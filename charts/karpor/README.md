@@ -49,6 +49,7 @@ The following table lists the configurable parameters of the chart and their def
 |-----|------|---------|-------------|
 | namespace | string | `"karpor"` | Which namespace to be deployed. |
 | namespaceEnabled | bool | `true` | Whether to generate namespace. |
+| registryProxy | string | `""` | Image registry proxy will be the prefix as all component image. |
 
 ### Global Parameters
 

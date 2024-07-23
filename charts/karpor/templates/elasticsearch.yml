@@ -42,7 +42,7 @@ spec:
               value: elastic
             - name: ES_JAVA_OPTS
               value: -Xms1g -Xmx1g
-          image: {{ .Values.elasticsearch.image.repo }}:{{ .Values.elasticsearch.image.tag }}
+          image: {{ include "karpor.realImage" (dict "context" . "repo" .Values.elasticsearch.image.repo "tag" .Values.elasticsearch.image.tag) }}
           imagePullPolicy: {{ .Values.global.image.imagePullPolicy }} 
           name: elasticsearch
           ports:
