@@ -9,7 +9,7 @@ spec:
     spec:
       containers:
         - name: karpor-generate-cert
-          image: {{ .Values.job.image.repo }}:{{ .Values.job.image.tag }}
+          image: {{ include "karpor.realImage" (dict "context" . "repo" .Values.job.image.repo "tag" .Values.job.image.tag) }}
           imagePullPolicy: {{ .Values.global.image.imagePullPolicy }} 
           command:
           - /bin/sh

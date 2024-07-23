@@ -24,7 +24,7 @@ spec:
           env:
             - name: KUBECONFIG
               value: /etc/karpor/config
-          image: {{ .Values.syncer.image.repo }}:v{{ default .Chart.AppVersion .Values.syncer.image.tag }}
+          image: {{ include "karpor.realImage" (dict "context" . "repo" .Values.syncer.image.repo "tag" .Values.syncer.image.tag "hasV" true) }}
           imagePullPolicy: {{ .Values.global.image.imagePullPolicy }} 
           name: karpor-syncer
           ports:
