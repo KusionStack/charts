@@ -2,7 +2,69 @@
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
 
+# -- Which namespace to be deployed.
 namespace: karpor
+# -- Whether to generate namespace.
 namespaceEnabled: true
-port: 7443
-tag: v0.4.2
+
+# Global configuration for Karpor components
+global:
+  image:
+    # -- Image pull policy to be applied to all Karpor components.
+    imagePullPolicy: IfNotPresent
+
+# Configuration for Karpor server
+server:
+  # -- Component name for Karpor server.
+  name: karpor-server
+  image:
+    # -- Repository for Karpor server image.
+    repo: kusionstack/karpor
+    # -- Tag for Karpor server image. Defaults to the chart's appVersion if not specified.
+    tag: ""
+  # -- Port for Karpor server.
+  port: 7443
+
+# Configuration for Karpor syncer
+syncer:
+  # -- Component name for Karpor syncer.
+  name: karpor-syncer
+  image:
+    # -- Repository for Karpor syncer image.
+    repo: kusionstack/karpor
+    # -- Tag for Karpor syncer image. Defaults to the chart's appVersion if not specified.
+    tag: ""
+  # -- Port for Karpor syncer.
+  port: 7443
+
+# Configuration for ElasticSearch
+elasticsearch:
+  # -- Component name for ElasticSearch.
+  name: elasticsearch
+  image:
+    # -- Repository for ElasticSearch image.
+    repo: docker.elastic.co/elasticsearch/elasticsearch
+    # -- Specific tag for ElasticSearch image.
+    tag: "8.6.2"
+  # -- Port for ElasticSearch.
+  port: 9200
+
+# Configuration for ETCD
+etcd:
+  # -- Component name for ETCD.
+  name: etcd
+  image:
+    # -- Repository for ETCD image.
+    repo: quay.io/coreos/etcd
+    # -- Specific tag for ETCD image.
+    tag: "v3.5.11"
+  # -- Port for ETCD.
+  port: 2379
+
+# Configuration for Jobs
+job:
+  image:
+    # -- Repository for the Job image.
+    repo: golang
+    # -- Specific tag for the Job image.
+    tag: "1.19"

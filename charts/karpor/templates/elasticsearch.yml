@@ -5,26 +5,26 @@ metadata:
   namespace: {{ .Values.namespace }}
 spec:
   ports:
-    - port: 9200
+    - port: {{ .Values.elasticsearch.port }}
   selector:
-    app: elasticsearch
+    {{- include "karpor.selectorLabels" (dict "context" . "component" .Values.elasticsearch.name) | nindent 4 }}
 ---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
   labels:
-    app: elasticsearch
+    {{- include "karpor.labels" (dict "context" . "component" .Values.elasticsearch.name) | nindent 4 }}
   name: elasticsearch
   namespace: {{ .Values.namespace }}
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: elasticsearch
+      {{- include "karpor.selectorLabels" (dict "context" . "component" .Values.elasticsearch.name) | nindent 6 }}
   template:
     metadata:
       labels:
-        app: elasticsearch
+        {{- include "karpor.selectorLabels" (dict "context" . "component" .Values.elasticsearch.name) | nindent 8 }}
     spec:
       containers:
         - env:
@@ -42,11 +42,11 @@ spec:
               value: elastic
             - name: ES_JAVA_OPTS
               value: -Xms1g -Xmx1g
-          image: docker.elastic.co/elasticsearch/elasticsearch:8.6.2
-          imagePullPolicy: IfNotPresent
+          image: {{ .Values.elasticsearch.image.repo }}:{{ .Values.elasticsearch.image.tag }}
+          imagePullPolicy: {{ .Values.global.image.imagePullPolicy }} 
           name: elasticsearch
           ports:
-            - containerPort: 9200
+            - containerPort: {{ .Values.elasticsearch.port }}
               protocol: TCP
           resources:
             limits:
@@ -61,5 +61,5 @@ spec:
             - mountPath: /usr/share/elasticsearch/data
               name: data
       volumes:
-        - emptyDir: { }
+        - emptyDir: {}
           name: data

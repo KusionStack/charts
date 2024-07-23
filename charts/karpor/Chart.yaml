@@ -1,30 +1,22 @@
+# The fields explain in the Chart.yaml can refer:
+# https://helm.sh/docs/topics/charts/#the-chartyaml-file
 apiVersion: v2
 name: karpor
+# The Chart Version
+version: 0.5.0
+type: application
+# The Application Version in the Chart
+appVersion: 0.4.2
 description: A Helm chart for Karpor, a modern kubernetes visualization tool.
 home: https://github.com/KusionStack/karpor
 icon: https://kusionstack.io/karpor/assets/logo/logo.svg
-
-# A chart can be either an 'application' or a 'library' chart.
-#
-# Application charts are a collection of templates that can be packaged into versioned archives
-# to be deployed.
-#
-# Library charts provide useful utilities or functions for the chart developer. They're included as
-# a dependency of application charts to inject those utilities and functions into the rendering
-# pipeline. Library charts do not define any templates and therefore cannot be deployed.
-type: application
-
-# This is the chart version. This version number should be incremented each time you make changes
-# to the chart and its templates, including the app version.
-# Versions are expected to follow Semantic Versioning (https://semver.org/)
-version: 0.4.3
-
-# This is the version number of the application being deployed. This version number should be
-# incremented each time you make changes to the application. Versions are not expected to
-# follow Semantic Versioning. They should reflect the version the application is using.
-# It is recommended to use it with quotes.
-appVersion: 0.4.2
-
 maintainers:
 - name: kusionstack
+  email: kusionstack@gmail.com
   url: https://kusionstack.io/karpor
+sources:
+  - https://github.com/KusionStack/charts/tree/master/charts/karpor
+  - https://github.com/KusionStack/karpor
+keywords:
+  - KusionStack
+  - karpor
