@@ -1,14 +1,14 @@
-{ { - if .Values.namespaceEnabled - } }
+{{- if .Values.namespaceEnabled -}}
 apiVersion: v1
 kind: Namespace
 metadata:
   labels:
-    { { - toYaml .Values.commonLabels | nindent 4 } }
-    control-plane: { { .Values.controlPlane } }
-  name: { { .Values.namespace } }
-  { { - end } }
+    {{- toYaml .Values.commonLabels | nindent 4 }}
+    control-plane: {{ .Values.controlPlane }}
+  name: {{ .Values.namespace }}
+{{- end }}
 
-  { { - if .Values.sharding.isDemo } }
+{{- if .Values.sharding.isDemo }}
 ---
 apiVersion: v1
 kind: Namespace
@@ -104,4 +104,4 @@ apiVersion: v1
 kind: Namespace
 metadata:
   name: demo-0z
-  { { - end } }
+{{- end }}
