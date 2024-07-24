@@ -17,51 +17,100 @@ global:
 
 # Configuration for Karpor server
 server:
-  # -- Component name for Karpor server.
+  # -- Component name for karpor server.
   name: karpor-server
+  # -- The number of karpor server pods to run.
+  replicas: 1
+  # -- Port for karpor server.
+  port: 7443
   image:
     # -- Repository for Karpor server image.
     repo: kusionstack/karpor
     # -- Tag for Karpor server image. Defaults to the chart's appVersion if not specified.
     tag: ""
-  # -- Port for Karpor server.
-  port: 7443
+  # -- Resource limits and requests for the karpor server pods.
+  resources:
+    requests:
+      cpu: 250m
+      memory: 256Mi
+      ephemeral-storage: 2Gi
+    limits:
+      cpu: 500m
+      memory: 1Gi
+      ephemeral-storage: 10Gi
+
 
 # Configuration for Karpor syncer
 syncer:
   # -- Component name for Karpor syncer.
   name: karpor-syncer
+  # -- The number of karpor syncer pods to run.
+  replicas: 1
+  # -- Port for Karpor syncer.
+  port: 7443
   image:
     # -- Repository for Karpor syncer image.
     repo: kusionstack/karpor
     # -- Tag for Karpor syncer image. Defaults to the chart's appVersion if not specified.
     tag: ""
-  # -- Port for Karpor syncer.
-  port: 7443
+  # -- Resource limits and requests for the karpor syncer pods.
+  resources:
+    requests:
+      cpu: 250m
+      memory: 256Mi
+      ephemeral-storage: 2Gi
+    limits:
+      cpu: 500m
+      memory: 1Gi
+      ephemeral-storage: 10Gi
 
 # Configuration for ElasticSearch
 elasticsearch:
   # -- Component name for ElasticSearch.
   name: elasticsearch
+  # -- The number of ElasticSearch pods to run.
+  replicas: 1
+  # -- Port for ElasticSearch.
+  port: 9200
   image:
     # -- Repository for ElasticSearch image.
     repo: docker.elastic.co/elasticsearch/elasticsearch
     # -- Specific tag for ElasticSearch image.
     tag: "8.6.2"
-  # -- Port for ElasticSearch.
-  port: 9200
+  # -- Resource limits and requests for the karpor elasticsearch pods.
+  resources:
+    requests:
+      cpu: "2"
+      memory: 4Gi
+      ephemeral-storage: 10Gi
+    limits:
+      cpu: "2"
+      memory: 4Gi
+      ephemeral-storage: 10Gi
 
 # Configuration for ETCD
 etcd:
   # -- Component name for ETCD.
   name: etcd
+  # -- The number of etcd pods to run.
+  replicas: 1
+  # -- Port for ETCD.
+  port: 2379
   image:
     # -- Repository for ETCD image.
     repo: quay.io/coreos/etcd
     # -- Specific tag for ETCD image.
     tag: "v3.5.11"
-  # -- Port for ETCD.
-  port: 2379
+  # -- Resource limits and requests for the karpor etcd pods.
+  resources:
+    requests:
+      cpu: 250m
+      memory: 256Mi
+      ephemeral-storage: 2Gi
+    limits:
+      cpu: 500m
+      memory: 1Gi
+      ephemeral-storage: 10Gi
 
 # Configuration for Jobs
 job:
