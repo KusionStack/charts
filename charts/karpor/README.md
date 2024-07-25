@@ -1,6 +1,6 @@
 # Karpor Chart
 
-![Version: 0.5.2](https://img.shields.io/badge/Version-0.5.2-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 0.4.2](https://img.shields.io/badge/AppVersion-0.4.2-informational?style=flat-square)
+![Version: 0.5.3](https://img.shields.io/badge/Version-0.5.3-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 0.4.3](https://img.shields.io/badge/AppVersion-0.4.3-informational?style=flat-square)
 
 A Helm chart for Karpor, a modern kubernetes visualization tool.
 
@@ -19,24 +19,31 @@ A Helm chart for Karpor, a modern kubernetes visualization tool.
 
 ## Prerequisites
 
-- Helm v3.5.0+
+- Helm v3+
 
 ## Installing the Chart
 
-To install the chart with the release name `my-release`:
+First, add the karpor chart repo to your local repository.
 
-```bash
-$ helm repo add kusionstack https://kusionstack.github.io/charts
-$ helm repo update
-$ helm install karpor kusionstack/karpor
+```shell
+helm repo add kusionstack https://kusionstack.github.io/charts
+helm repo update
+```
+
+Then you can use the following command to install the latest version of Karpor.
+
+```shell
+helm install karpor-release kusionstack/karpor
 ```
 
 **Note** that installing this chart directly means it will use the [default template values](./values.yaml) for Karpor.
 
-You may have to set your specific configurations if it is deployed into a production cluster, or you want to custom configure `resources`, `replicas`, `port` etc.
+You may have to set your specific configurations if it is deployed into a production cluster, or you want to customize the chart configuration, such as `resources`, `replicas`, `port` etc.
 
-```bash
-$ helm install my-release kusionstack/karpor --set server.replicas=3 --set syncer.port=7654
+All configurable parameters of the Karpor chart are detailed [here](#chart-parameters).
+
+```shell
+helm install karpor-release kusionstack/karpor --set server.replicas=3 --set syncer.port=7654
 ```
 
 ## Chart Parameters
