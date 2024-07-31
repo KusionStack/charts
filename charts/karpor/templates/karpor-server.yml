@@ -35,7 +35,7 @@ spec:
             - --client-ca-file=/etc/karpor/ca.crt
           command:
             - /karpor
-          image: {{ include "karpor.realImage" (dict "context" . "repo" .Values.server.image.repo "tag" .Values.server.image.tag "hasV" true) }}
+          image: {{ include "karpor.realImage" (dict "context" . "repo" .Values.server.image.repo "tag" .Values.server.image.tag "needV" (not (hasPrefix "v" .Values.server.image.tag))) }}
           imagePullPolicy: {{ .Values.global.image.imagePullPolicy }} 
           name: karpor-server
           ports:

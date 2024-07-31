@@ -31,6 +31,6 @@ Real image.
 */}}
 {{- define "karpor.realImage" -}}
 {{- trimPrefix "/" (list (trimAll "/" .context.Values.registryProxy)
-.repo | join "/") }}:{{ if .hasV }}v{{ end }}{{ default .context.Chart.AppVersion .tag }}
+.repo | join "/") }}:{{ if .needV }}v{{ end }}{{ default .context.Chart.AppVersion .tag }}
 {{- end -}}
 
