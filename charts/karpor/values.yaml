@@ -112,6 +112,20 @@ etcd:
       memory: 1Gi
       ephemeral-storage: 10Gi
 
+  # -- Configuration for the persistence for etcd.
+  persistence:
+    # -- Name of an existing PVC (if exists), else leave empty.
+    existingPVC: ""
+
+    # -- Configuration for PVC created by helm.
+    annotations: {}
+    labels: {}
+    # -- StorageClass name, if used, needs to be deployed manually.
+    storageClassName: ""
+    storageSize: 10Gi
+    volumeMode: Filesystem
+    accessMode: "ReadWriteOnce"
+
 # Configuration for Jobs
 job:
   image:

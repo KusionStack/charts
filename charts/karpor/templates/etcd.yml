@@ -45,11 +45,32 @@ spec:
               mountPath: /etcd-data
           resources:
             {{- toYaml .Values.etcd.resources | nindent 12 }}
-  volumeClaimTemplates:
-    - metadata:
-        name: data
-      spec:
-        accessModes: [ "ReadWriteOnce" ]
-        resources:
-          requests:
-            storage: 10Gi
+      volumes:
+        - name: data
+          persistentVolumeClaim:
+            claimName: {{- if .Values.etcd.persistence.existingPVC }} {{ .Values.etcd.persistence.existingPVC }}{{- else }}etcd-pvc{{- end }}
+---
+{{- if or (not .Values.etcd.persistence.existingPVC) (eq .Values.etcd.persistence.existingPVC "") }}
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+{{- if .Values.etcd.persistence.annotations }}
+  annotations:
+{{ toYaml .Values.etcd.persistence.annotations | indent 4 }}
+{{- end }}
+  name: etcd-pvc
+  namespace: {{ .Values.namespace }}
+  labels:
+    {{- include "karpor.labels" (dict "context" . "component" .Values.etcd.name) | nindent 4 }}
+{{- if .Values.etcd.persistence.labels }}
+{{ toYaml .Values.etcd.persistence.labels | indent 4 }}
+{{- end }}
+spec:
+  accessModes:
+    - {{ .Values.etcd.persistence.accessMode | quote }}
+  resources:
+    requests:
+      storage: {{ .Values.etcd.persistence.storageSize | quote }}
+  storageClassName: "{{ .Values.etcd.persistence.storageClassName }}"
+  volumeMode: {{ default "Filesystem" .Values.etcd.persistence.volumeMode }}
+{{- end }}
