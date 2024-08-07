@@ -116,6 +116,6 @@ etcd:
 job:
   image:
     # -- Repository for the Job image.
-    repo: golang
-    # -- Specific tag for the Job image.
-    tag: "1.19"
+    repo: kusionstack/karpor
+    # -- Tag for Karpor image. Defaults to the chart's appVersion if not specified.
+    tag: ""
