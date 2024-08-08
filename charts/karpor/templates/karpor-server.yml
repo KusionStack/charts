@@ -33,6 +33,7 @@ spec:
             - --etcd-servers=http://etcd.{{ .Values.namespace }}.svc:{{ .Values.etcd.port }}
             - --secure-port={{ .Values.server.port }}
             - --client-ca-file=/etc/karpor/ca.crt
+            - --service-account-signing-key-file=/etc/karpor/ca.key
           command:
             - /karpor
           image: {{ include "karpor.realImage" (dict "context" . "repo" .Values.server.image.repo "tag" .Values.server.image.tag "needV" (not (hasPrefix "v" .Values.server.image.tag))) }}
