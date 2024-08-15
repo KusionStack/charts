@@ -113,7 +113,7 @@ etcd:
       ephemeral-storage: 10Gi
   persistence:
     # enabled: true
-    size: 11Gi
+    size: 10Gi
     accessModes:
       - ReadWriteOnce
     ## If defined, storageClassName: <storageClass>
