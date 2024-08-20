@@ -3,10 +3,10 @@
 apiVersion: v2
 name: karpor
 # The Chart Version
-version: 0.5.6
+version: 0.6.3
 type: application
 # The Application Version in the Chart
-appVersion: 0.4.5
+appVersion: 0.4.9
 description: A Helm chart for Karpor, a modern kubernetes visualization tool.
 home: https://github.com/KusionStack/karpor
 icon: https://kusionstack.io/karpor/assets/logo/logo.svg
