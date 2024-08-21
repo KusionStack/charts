@@ -111,11 +111,23 @@ etcd:
       cpu: 500m
       memory: 1Gi
       ephemeral-storage: 10Gi
+  persistence:
+    # enabled: true
+    size: 10Gi
+    accessModes:
+      - ReadWriteOnce
+    ## If defined, storageClassName: <storageClass>
+    ## If set to "-", storageClassName: "", which disables dynamic provisioning
+    ## If undefined (the default) or set to null, no storageClassName spec is
+    ##   set, choosing the default provisioner.  (gp2 on AWS, standard on
+    ##   GKE, AWS & OpenStack)
+    ##
+    # storageClass: "-"
 
 # Configuration for Jobs
 job:
   image:
     # -- Repository for the Job image.
-    repo: golang
-    # -- Specific tag for the Job image.
-    tag: "1.19"
+    repo: kusionstack/karpor
+    # -- Tag for Karpor image. Defaults to the chart's appVersion if not specified.
+    tag: ""

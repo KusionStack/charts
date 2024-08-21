@@ -9,13 +9,13 @@ spec:
     spec:
       containers:
         - name: karpor-generate-cert
-          image: {{ include "karpor.realImage" (dict "context" . "repo" .Values.job.image.repo "tag" .Values.job.image.tag) }}
+          image: {{ include "karpor.realImage" (dict "context" . "repo" .Values.job.image.repo "tag" .Values.job.image.tag "needV" (not (hasPrefix "v" .Values.job.image.tag))) }}
           imagePullPolicy: {{ .Values.global.image.imagePullPolicy }} 
           command:
           - /bin/sh
           - -c
           args:
-          - go install github.com/KusionStack/karpor/hack/cert-generator@latest && cert-generator --ca-name=karpor-secret --kubeconfig-name=karpor-kubeconfig
+          - /cert-generator --ca-name=karpor-secret --kubeconfig-name=karpor-kubeconfig
       restartPolicy: OnFailure
 ---
 apiVersion: rbac.authorization.k8s.io/v1
