@@ -1,6 +1,6 @@
 # Karpor Chart
 
-![Version: 0.6.1](https://img.shields.io/badge/Version-0.6.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 0.4.8](https://img.shields.io/badge/AppVersion-0.4.8-informational?style=flat-square)
+![Version: 0.6.4](https://img.shields.io/badge/Version-0.6.4-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 0.4.10](https://img.shields.io/badge/AppVersion-0.4.10-informational?style=flat-square)
 
 A Helm chart for Karpor, a modern kubernetes visualization tool.
 
@@ -112,6 +112,8 @@ The ETCD Component is the storage of Karpor Server as `apiserver`.
 | etcd.image.repo | string | `"quay.io/coreos/etcd"` | Repository for ETCD image. |
 | etcd.image.tag | string | `"v3.5.11"` | Specific tag for ETCD image. |
 | etcd.name | string | `"etcd"` | Component name for ETCD. |
+| etcd.persistence.accessModes[0] | string | `"ReadWriteOnce"` |  |
+| etcd.persistence.size | string | `"10Gi"` |  |
 | etcd.port | int | `2379` | Port for ETCD. |
 | etcd.replicas | int | `1` | The number of etcd pods to run. |
 | etcd.resources | object | `{"limits":{"cpu":"500m","ephemeral-storage":"10Gi","memory":"1Gi"},"requests":{"cpu":"250m","ephemeral-storage":"2Gi","memory":"256Mi"}}` | Resource limits and requests for the karpor etcd pods. |
