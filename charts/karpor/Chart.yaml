@@ -3,7 +3,7 @@
 apiVersion: v2
 name: karpor
 # The Chart Version
-version: 0.6.4
+version: 0.6.5
 type: application
 # The Application Version in the Chart
 appVersion: 0.4.10
