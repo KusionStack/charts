@@ -1,5 +1,7 @@
 # KusionStack Helm Charts
 
+[![Chart Publish](https://github.com/KusionStack/charts/actions/workflows/release.yaml/badge.svg?branch=master)](https://github.com/KusionStack/charts/actions/workflows/release.yaml)
+[![Artifact HUB](https://img.shields.io/endpoint?url=https://artifacthub.io/badge/repository/kusionstack)](https://artifacthub.io/packages/search?repo=kusionstack)
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 
 
