@@ -497,6 +497,19 @@ entries:
     urls:
     - https://github.com/KusionStack/charts/releases/download/karpor-0.3.18/karpor-0.3.18.tgz
     version: 0.3.18
+  kuperator:
+  - apiVersion: v1
+    appVersion: 0.5.3
+    created: "2024-08-27T07:17:34.901808167Z"
+    description: Helm chart for KusionStack Kuperator
+    digest: f876a9806b5b83e526d5d967392a2558cb066f6d5133520365feaa657814e508
+    home: https://KusionStack.io
+    name: kuperator
+    sources:
+    - https://github.com/KusionStack/kuperator
+    urls:
+    - https://github.com/KusionStack/charts/releases/download/kuperator-0.5.3/kuperator-0.5.3.tgz
+    version: 0.5.3
   operating:
   - apiVersion: v1
     appVersion: 0.5.1
@@ -615,4 +628,4 @@ entries:
     urls:
     - https://github.com/KusionStack/charts/releases/download/sample-operator-0.1.1/sample-operator-0.1.1.tgz
     version: 0.1.1
-generated: "2024-08-23T05:35:55.51933336Z"
+generated: "2024-08-27T07:17:34.902259096Z"
