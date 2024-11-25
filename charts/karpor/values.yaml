@@ -40,8 +40,6 @@ server:
       ephemeral-storage: 10Gi
   serviceType: ClusterIP
 
-
-
 # Configuration for Karpor syncer
 syncer:
   # -- Component name for Karpor syncer.
