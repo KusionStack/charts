@@ -38,6 +38,7 @@ server:
       cpu: 500m
       memory: 1Gi
       ephemeral-storage: 10Gi
+  # -- Service type for the karpor server. The available type values list as ["ClusterIP"、"NodePort"、"LoadBalancer"].
   serviceType: ClusterIP
 
 # Configuration for Karpor syncer
@@ -113,7 +114,9 @@ etcd:
       ephemeral-storage: 10Gi
   persistence:
     # enabled: true
+    # -- Size of etcd persistent volume
     size: 10Gi
+    # -- Volume access mode, ReadWriteOnce means single node read-write access
     accessModes:
       - ReadWriteOnce
     ## If defined, storageClassName: <storageClass>
