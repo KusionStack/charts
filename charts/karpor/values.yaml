@@ -38,6 +38,8 @@ server:
       cpu: 500m
       memory: 1Gi
       ephemeral-storage: 10Gi
+  serviceType: ClusterIP
+
 
 
 # Configuration for Karpor syncer

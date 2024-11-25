@@ -8,6 +8,7 @@ spec:
     - port: {{ .Values.server.port }}
   selector:
     {{- include "karpor.selectorLabels" (dict "context" . "component" .Values.server.name) | nindent 4 }}
+  type: {{ .Values.server.serviceType }}
 ---
 apiVersion: apps/v1
 kind: Deployment
