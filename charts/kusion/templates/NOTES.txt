@@ -1,0 +1,28 @@
+Thank you for installing {{ .Chart.Name }}.
+
+Your release is named {{ .Release.Name }}.
+
+To learn more about the release, try:
+
+  $ helm status {{ .Release.Name }}
+  $ helm get all {{ .Release.Name }}
+
+{{- if .Values.mysql.enabled }}
+
+MySQL is enabled. The following credentials were configured:
+  - Database: {{ .Values.mysql.database }}
+  - User: {{ .Values.mysql.user }}
+  Please retrieve the passwords from the secret: {{ .Values.mysql.name }}-secret
+{{- end }}
+
+The Kusion server can be accessed:
+  - Within cluster: {{ .Values.server.name }}.{{ .Values.namespace }}.svc:{{ .Values.server.port }}
+{{- if eq .Values.server.serviceType "NodePort" }}
+  - From outside: <node-ip>:<node-port>
+    You can get the node port by running:
+    kubectl get svc {{ .Values.server.name }} -n {{ .Values.namespace }} -o jsonpath='{.spec.ports[0].nodePort}'
+{{- else if eq .Values.server.serviceType "LoadBalancer" }}
+  - From outside: <external-ip>:{{ .Values.server.port }}
+    You can get the external IP by running:
+    kubectl get svc {{ .Values.server.name }} -n {{ .Values.namespace }}
+{{- end }}
