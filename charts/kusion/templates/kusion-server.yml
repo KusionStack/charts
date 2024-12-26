@@ -1,0 +1,84 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Values.server.name }}
+  namespace: {{ .Values.namespace }}
+spec:
+  ports:
+    - port: {{ .Values.server.port }}
+      targetPort: http
+      protocol: TCP
+      name: http
+  selector:
+    {{- include "kusion.selectorLabels" (dict "context" . "component" .Values.server.name) | nindent 4 }}
+  type: {{ .Values.server.serviceType }}
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    {{- include "kusion.labels" (dict "context" . "component" .Values.server.name) | nindent 4 }}
+  name: {{ .Values.server.name }}
+  namespace: {{ .Values.namespace }}
+spec:
+  replicas: {{ .Values.server.replicas }}
+  selector:
+    matchLabels:
+      {{- include "kusion.selectorLabels" (dict "context" . "component" .Values.server.name) | nindent 6 }}
+  template:
+    metadata:
+      labels:
+        {{- include "kusion.selectorLabels" (dict "context" . "component" .Values.server.name) | nindent 8 }}
+    spec:
+      containers:
+        - name: {{ .Values.server.name }}
+          image: {{ include "kusion.realImage" (dict "context" . "repo" .Values.server.image.repo "tag" .Values.server.image.tag) }}
+          imagePullPolicy: {{ .Values.server.image.imagePullPolicy }}
+          ports:
+            - name: http
+              containerPort: {{ .Values.server.port }}
+              protocol: TCP
+          command:
+            - /usr/local/bin/kusion
+            - server
+          args:
+            - --port={{ .Values.server.port }}
+            - --auth-enabled={{ .Values.server.args.authEnabled }}
+            {{- if .Values.server.args.authWhitelist }}
+            - --auth-whitelist={{ .Values.server.args.authWhitelist | join "," }}
+            {{- end }}
+            - --auth-key-type={{ .Values.server.args.authKeyType }}
+            - --max-concurrent={{ .Values.server.args.maxConcurrent }}
+            - --max-async-buffer={{ .Values.server.args.maxAsyncBuffer }}
+            - --max-async-concurrent={{ .Values.server.args.maxAsyncConcurrent }}
+            - --log-file-path={{ .Values.server.args.logFilePath }}
+            - --db-name={{ if .Values.mysql.enabled }}{{ .Values.mysql.database }}{{ else }}{{ .Values.server.args.dbName }}{{ end }}
+            - --db-user={{ if .Values.mysql.enabled }}{{ .Values.mysql.user }}{{ else }}{{ .Values.server.args.dbUser }}{{ end }}
+            {{- if .Values.mysql.enabled }}
+            - --db-pass=$(MYSQL_PASSWORD)
+            {{- else if .Values.server.args.dbPassword }}
+            - --db-pass={{ .Values.server.args.dbPassword }}
+            {{- end }}
+            - --db-host={{ if .Values.mysql.enabled }}{{ .Values.mysql.name }}.{{ .Values.namespace }}.svc{{ else }}{{ .Values.server.args.dbHost }}{{ end }}
+            - --db-port={{ if .Values.mysql.enabled }}{{ .Values.mysql.port }}{{ else }}{{ .Values.server.args.dbPort }}{{ end }}
+            - --auto-migrate={{ if .Values.mysql.enabled }}true{{ else }}{{ .Values.server.args.autoMigrate }}{{ end }}
+            {{- if and (not .Values.mysql.enabled) .Values.server.args.migrateFile }}
+            - --migrate-file={{ .Values.server.args.migrateFile }}
+            {{- end }}
+            {{- if .Values.server.args.defaultSourceRemote }}
+            - --default-source-remote={{ .Values.server.args.defaultSourceRemote }}
+            {{- end }}
+          env:
+            {{- range $key, $value := .Values.server.env }}
+            - name: {{ $key }}
+              value: {{ $value }}
+            {{- end }}
+            {{- if .Values.mysql.enabled }}
+            - name: MYSQL_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Values.mysql.name }}-secret
+                  key: mysql-password
+            {{- end }}
+          resources:
+            {{- toYaml .Values.server.resources | nindent 12 }}

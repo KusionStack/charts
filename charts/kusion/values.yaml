@@ -1,0 +1,115 @@
+# -- Which namespace to be deployed
+namespace: kusion
+# -- Whether to generate namespace
+namespaceEnabled: true
+# -- Image registry proxy will be the prefix as all component images
+registryProxy: ""
+
+# Configuration for Kusion server
+server:
+  # -- Component name for kusion server
+  name: kusion-server
+  # -- The number of kusion server pods to run
+  replicas: 1
+  # -- Port for kusion server
+  port: 80
+  image:
+    # -- Repository for Kusion server image
+    repo: kusionstack/kusion
+    # -- Tag for Kusion server image. Defaults to the chart's appVersion if not specified
+    tag: "latest"
+    # -- Image pull policy
+    imagePullPolicy: IfNotPresent
+  # -- Resource limits and requests for the kusion server pods
+  resources:
+    requests:
+      cpu: 250m
+      memory: 256Mi
+    limits:
+      cpu: 500m
+      memory: 1Gi
+  # -- Service type for the kusion server. The available type values list as ["ClusterIP"、"NodePort"、"LoadBalancer"].
+  serviceType: ClusterIP
+  # Additional command line arguments for the server
+  args:
+    # -- Whether to enable authentication
+    authEnabled: false
+    # -- Authentication whitelist
+    authWhitelist: []
+    # -- Authentication key type
+    authKeyType: "RSA"
+
+    # -- Maximum number of concurrent executions including preview, apply and destroy
+    maxConcurrent: 10
+    # -- Maximum number of buffer zones during concurrent async executions including generate, preview, apply and destroy
+    maxAsyncBuffer: 100
+    # -- Maximum number of concurrent async executions including generate, preview, apply and destroy
+    maxAsyncConcurrent: 1
+
+    # -- Logging
+    logFilePath: "/logs/kusion.log"
+
+    # Database connection settings.
+    # If MySQL is enabled (mysql.enabled=true), these settings will use the MySQL configuration defined below by default.
+    # Otherwise, provide custom database connection details.
+    # -- Database name
+    dbName: ""
+    # -- Database user
+    dbUser: ""
+    # -- Database password
+    dbPassword: ""
+    # -- Database host
+    dbHost: ""
+    # -- Database port
+    dbPort: 3306
+    # -- Whether to enable automatic migration
+    autoMigrate: true
+    # -- Migration file path
+    migrateFile: ""
+    # -- Default source URL
+    defaultSourceRemote: ""
+  # -- Additional environment variables for the server
+  env: []
+
+# MySQL configuration
+mysql:
+  # -- Whether to enable MySQL deployment
+  enabled: true
+  # -- Component name for MySQL
+  name: mysql
+  # -- The number of MySQL pods to run
+  replicas: 1
+  # -- Port for MySQL
+  port: 3306
+  image:
+    # -- Repository for MySQL image
+    repo: mysql
+    # -- Specific tag for MySQL image
+    tag: "8.0"
+  # -- Image pull policy
+    imagePullPolicy: IfNotPresent
+  # -- Resource limits and requests for MySQL pods
+  resources:
+    requests:
+      cpu: 250m
+      memory: 512Mi
+    limits:
+      cpu: 1000m
+      memory: 1Gi
+  # -- MySQL root password
+  rootPassword: ""
+  # -- MySQL database name
+  database: kusion
+  # -- MySQL user
+  user: kusion
+  # -- MySQL password
+  password: ""
+  # MySQL persistence settings
+  persistence:
+    # -- Size of MySQL persistent volume
+    size: 10Gi
+    # -- Storage class for MySQL PVC
+    storageClass: ""
+    # -- Access modes for MySQL PVC
+    accessModes:
+      - ReadWriteOnce
