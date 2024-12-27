@@ -1,6 +1,6 @@
 apiVersion: v2
 name: karpor
-version: 0.6.18
+version: 0.6.19
 type: application
 appVersion: 0.5.9
 description: A modern kubernetes visualization tool (Karpor).
