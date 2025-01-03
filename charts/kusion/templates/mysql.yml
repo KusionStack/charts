@@ -1,0 +1,90 @@
+{{- if .Values.mysql.enabled }}
+apiVersion: v1
+kind: Secret
+metadata:
+  name: {{ .Values.mysql.name }}-secret
+  namespace: {{ .Values.namespace }}
+type: Opaque
+data:
+  mysql-root-password: {{ if .Values.mysql.rootPassword }}{{ .Values.mysql.rootPassword | b64enc }}{{ else }}{{ randAlphaNum 16 | b64enc }}{{ end }}
+  mysql-password: {{ if .Values.mysql.password }}{{ .Values.mysql.password | b64enc }}{{ else }}{{ randAlphaNum 16 | b64enc }}{{ end }}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Values.mysql.name }}
+  namespace: {{ .Values.namespace }}
+spec:
+  ports:
+    - port: {{ .Values.mysql.port }}
+      targetPort: mysql
+      protocol: TCP
+      name: mysql
+  selector:
+    {{- include "kusion.selectorLabels" (dict "context" . "component" .Values.mysql.name) | nindent 4 }}
+---
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: {{ .Values.mysql.name }}
+  namespace: {{ .Values.namespace }}
+  labels:
+    {{- include "kusion.labels" (dict "context" . "component" .Values.mysql.name) | nindent 4 }}
+spec:
+  serviceName: {{ .Values.mysql.name }}
+  replicas: {{ .Values.mysql.replicas }}
+  selector:
+    matchLabels:
+      {{- include "kusion.selectorLabels" (dict "context" . "component" .Values.mysql.name) | nindent 6 }}
+  template:
+    metadata:
+      labels:
+        {{- include "kusion.selectorLabels" (dict "context" . "component" .Values.mysql.name) | nindent 8 }}
+    spec:
+      containers:
+        - name: mysql
+          image: {{ include "kusion.realImage" (dict "context" . "repo" .Values.mysql.image.repo "tag" .Values.mysql.image.tag) }}
+          imagePullPolicy: {{ .Values.mysql.image.imagePullPolicy }}
+          ports:
+            - name: mysql
+              containerPort: {{ .Values.mysql.port }}
+              protocol: TCP
+          env:
+            - name: MYSQL_ROOT_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Values.mysql.name }}-secret
+                  key: mysql-root-password
+            - name: MYSQL_DATABASE
+              value: {{ .Values.mysql.database }}
+            - name: MYSQL_USER
+              value: {{ .Values.mysql.user }}
+            - name: MYSQL_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Values.mysql.name }}-secret
+                  key: mysql-password
+          resources:
+            {{- toYaml .Values.mysql.resources | nindent 12 }}
+          volumeMounts:
+            - name: data
+              mountPath: /var/lib/mysql
+  volumeClaimTemplates:
+    - metadata:
+        name: data
+      spec:
+        accessModes:
+        {{- range .Values.mysql.persistence.accessModes }}
+          - {{ . | quote }}
+        {{- end }}
+        resources:
+          requests:
+            storage: {{ .Values.mysql.persistence.size | quote }}
+        {{- if .Values.mysql.persistence.storageClass }}
+        {{- if (eq "-" .Values.mysql.persistence.storageClass) }}
+        storageClassName: ""
+        {{- else }}
+        storageClassName: "{{ .Values.mysql.persistence.storageClass }}"
+        {{- end }}
+        {{- end }}
+{{- end }}
