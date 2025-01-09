@@ -38,6 +38,7 @@ server:
       cpu: 500m
       memory: 1Gi
       ephemeral-storage: 10Gi
+  enableRbac: false
   # -- Service type for the karpor server. The available type values list as ["ClusterIP"、"NodePort"、"LoadBalancer"].
   serviceType: ClusterIP
 
