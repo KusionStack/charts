@@ -77,6 +77,7 @@ The Karpor Server Component is main backend server. It itself is an `apiserver`,
 | server.replicas | int | `1` | The number of karpor server pods to run. |
 | server.resources | object | `{"limits":{"cpu":"500m","ephemeral-storage":"10Gi","memory":"1Gi"},"requests":{"cpu":"250m","ephemeral-storage":"2Gi","memory":"256Mi"}}` | Resource limits and requests for the karpor server pods. |
 | server.serviceType | string | `"ClusterIP"` | Service type for the karpor server. The available type values list as ["ClusterIP"、"NodePort"、"LoadBalancer"]. |
+| server.enableRbac | bool | `false` | Enable RBAC authorization if set to true. |
 
 ### Karpor Syncer
 
