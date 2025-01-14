@@ -82,3 +82,21 @@ spec:
             {{- end }}
           resources:
             {{- toYaml .Values.server.resources | nindent 12 }}
+          volumeMounts: 
+            - name: kubeconfig-volume
+              mountPath: {{ .Values.kubeConfigVolumeMountPath }}
+      volumes: 
+        - name: kubeconfig-volume
+          secret: 
+            secretName: {{ .Values.server.name }}-kubeconfigs
+---
+apiVersion: v1
+kind: Secret
+metadata: 
+  name: {{ .Values.server.name }}-kubeconfigs
+  namespace: {{ .Values.namespace }}
+type: Opaque
+data: 
+  {{- range .Values.secrets.kubeConfigs }}
+  {{ .key }}: {{ .value | b64enc | quote }}
+  {{- end }}

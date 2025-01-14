@@ -113,3 +113,13 @@ mysql:
     # -- Access modes for MySQL PVC
     accessModes:
       - ReadWriteOnce
+
+# -- Volume mount path for KubeConfig files
+kubeConfigVolumeMountPath: /var/run/secrets/kubernetes.io/kubeconfigs/
+
+# KubeConfig configuration
+secrets: 
+  kubeConfigs: 
+    - key: "kubeconfig-0"
+      value: |
+        Please fill in your KubeConfig contents here. 
