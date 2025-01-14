@@ -1,6 +1,6 @@
 # Karpor Chart
 
-![Version: 0.6.21](https://img.shields.io/badge/Version-0.6.21-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 0.5.9](https://img.shields.io/badge/AppVersion-0.5.9-informational?style=flat-square)  [![Artifact HUB](https://img.shields.io/endpoint?url=https://artifacthub.io/badge/repository/karpor)](https://artifacthub.io/packages/helm/kusionstack/karpor)
+![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) [![Artifact HUB](https://img.shields.io/endpoint?url=https://artifacthub.io/badge/repository/karpor)](https://artifacthub.io/packages/helm/kusionstack/karpor)
 
 A modern kubernetes visualization tool (Karpor).
 
