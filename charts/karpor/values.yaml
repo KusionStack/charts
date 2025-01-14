@@ -38,9 +38,27 @@ server:
       cpu: 500m
       memory: 1Gi
       ephemeral-storage: 10Gi
+  # -- Enable RBAC authorization if set to true.
   enableRbac: false
   # -- Service type for the karpor server. The available type values list as ["ClusterIP"、"NodePort"、"LoadBalancer"].
   serviceType: ClusterIP
+  # -- AI configuration section. The AI analysis feature requires that [authToken, baseUrl] be assigned values.
+  ai:
+    # -- Authentication token for accessing the AI service.
+    authToken: ""
+    # -- Base URL of the AI service. e.g., "https://api.openai.com/v1".
+    baseUrl: ""
+    # -- Backend service or platform that the AI model is hosted on. e.g., "openai". If the backend you are using
+    # is compatible with OpenAI, then there is no need to make any changes here.
+    backend: "openai"
+    # -- Name or identifier of the AI model to be used. e.g., "gpt-3.5-turbo".
+    model: "gpt-3.5-turbo"
+    # -- Temperature parameter for the AI model. This controls the randomness of the output, where a higher
+    # value (e.g., 1.0) makes the output more random, and a lower value (e.g., 0.0) makes it more deterministic.
+    temperature: 1.0
+    # -- Top-p (nucleus sampling) parameter for the AI model. This controls Controls the probability mass to consider for
+    # sampling, where a higher value leads to greater diversity in the generated content (typically ranging from 0 to 1)
+    topP: 1.0
 
 # Configuration for Karpor syncer
 syncer:
