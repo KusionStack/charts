@@ -10,6 +10,18 @@ spec:
     {{- include "karpor.selectorLabels" (dict "context" . "component" .Values.server.name) | nindent 4 }}
   type: {{ .Values.server.serviceType }}
 ---
+{{- if .Values.server.ai.authToken }}
+apiVersion: v1
+kind: Secret
+metadata:
+  name: karpor-auth
+  namespace: {{ .Values.namespace }}
+  labesl: {{- include "karpor.labels" (dict "context" . "component" .Values.server.name) | nindent 4 }}
+type: Opaque
+data:
+  aiAuthToken: {{ .Values.server.ai.authToken | b64enc | quote }}
+{{- end }}
+---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -38,6 +50,22 @@ spec:
             {{- if .Values.server.enableRbac }}
             - --enable-rbac=true
             {{- end }}
+            {{- if and .Values.server.ai.authToken .Values.server.ai.baseUrl }}
+            - --ai-auth-token=$(aiAuthToken)
+            - --ai-base-url={{ .Values.server.ai.baseUrl }}
+            {{- if .Values.server.ai.backend }}
+            - --ai-backend={{ .Values.server.ai.backend }}
+            {{- end }}
+            {{- if .Values.server.ai.model }}
+            - --ai-model={{ .Values.server.ai.model }}
+            {{- end }}
+            {{- if .Values.server.ai.temperature }}
+            - --ai-temperature={{ .Values.server.ai.temperature }}
+            {{- end }}
+            {{- if .Values.server.ai.topP }}
+            - --ai-top-p={{ .Values.server.ai.topP }}
+            {{- end }}
+            {{- end }}
           command:
             - /karpor
           image: {{ include "karpor.realImage" (dict "context" . "repo" .Values.server.image.repo "tag" .Values.server.image.tag "needV" (not (hasPrefix "v" .Values.server.image.tag))) }}
@@ -48,10 +76,25 @@ spec:
           volumeMounts:
             - mountPath: /etc/karpor/
               name: karpor-secret
+            {{- if .Values.server.ai.authToken }}
+            - mountPath: /etc/auth/
+              name: karpor-auth
+            {{- end }}
           resources:
             {{- toYaml .Values.server.resources | nindent 12 }}
+          {{- if .Values.server.ai.authToken }}
+          envFrom:
+            - secretRef:
+                name: karpor-auth
+          {{- end }}
       volumes:
         - name: karpor-secret
           secret:
             defaultMode: 420
             secretName: karpor-secret
+        {{- if .Values.server.ai.authToken }}
+        - name: karpor-auth
+          secret:
+            defaultMode: 420
+            secretName: karpor-auth
+        {{- end }}
