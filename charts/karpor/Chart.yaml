@@ -1,8 +1,8 @@
 apiVersion: v2
 name: karpor
-version: 0.6.21
+version: 0.7.0
 type: application
-appVersion: 0.5.9
+appVersion: 0.6.0
 description: A modern kubernetes visualization tool (Karpor).
 home: https://github.com/KusionStack/karpor
 icon: https://kusionstack.io/karpor/assets/logo/logo.svg
