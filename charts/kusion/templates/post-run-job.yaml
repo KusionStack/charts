@@ -1,0 +1,86 @@
+apiVersion: batch/v1
+kind: Job
+metadata: 
+  name: "{{ .Release.Name }}-post-install-job"
+  namespace: "{{ .Values.namespace }}"
+  labels: 
+    app.kubernetes.io/instance: "{{ .Release.Name }}"
+    app.kubernetes.io/version: "{{ .Chart.AppVersion }}"
+    helm.sh/chart: "{{ .Chart.Name }}-{{ .Chart.Version }}"
+  annotations: 
+    "helm.sh/hook": "post-install"
+    "helm.sh/hook-weight": "0"
+    "helm.sh/hook-delete-policy": "before-hook-creation,hook-succeeded"
+spec: 
+  template: 
+    metadata: 
+      name: "{{ .Release.Name }}"
+      labels: 
+        app.kubernetes.io/instance: "{{ .Release.Name }}"
+        app.kubernetes.io/version: "{{ .Chart.AppVersion }}"
+        helm.sh/chart: "{{ .Chart.Name }}-{{ .Chart.Version }}"
+    spec: 
+      restartPolicy: "Never"
+      containers: 
+        - name: register-necessary-modules
+          image: curlimages/curl:latest
+          env: 
+            - name: KUSION_SERVER_ENDPOINT
+              value: "{{ .Values.server.name }}.{{ .Values.namespace }}.svc:{{ .Values.server.port }}"
+          command: 
+            - /bin/sh
+            - -c
+            - >
+              echo "Calling Kusion API for Module Registration..."; 
+
+              echo "Registering kam module...";
+              curl -X POST "${KUSION_SERVER_ENDPOINT}/api/v1/modules" \
+                -H "Content-Type: application/json" \
+                -d '{"name":"kam","url":"oci://ghcr.io/kusionstack/kam"}';
+              
+              curl -X PUT "${KUSION_SERVER_ENDPOINT}/api/v1/modules/kam" \
+                -H "Content-Type: application/json" \
+                -d '{"name":"kam","description":"The kam module represents a Kusion opinionated abstraction of the core concepts during application delivery."}';
+              
+              curl -X PUT "${KUSION_SERVER_ENDPOINT}/api/v1/modules/kam" \
+                -H "Content-Type: application/json" \
+                -d '{"name":"kam","doc":"https://www.kusionstack.io/docs/reference/modules/developer-schemas/app-configuration"}';
+
+              curl -X PUT "${KUSION_SERVER_ENDPOINT}/api/v1/modules/kam" \
+                -H "Content-Type: application/json" \
+                -d '{"name":"kam","url":"git://github.com/KusionStack/kam"}';
+
+              echo "Registering service module...";
+              curl -X POST "${KUSION_SERVER_ENDPOINT}/api/v1/modules" \
+                -H "Content-Type: application/json" \
+                -d '{"name":"service","url":"oci://ghcr.io/kusionstack/service"}';
+              
+              curl -X PUT "${KUSION_SERVER_ENDPOINT}/api/v1/modules/service" \
+                -H "Content-Type: application/json" \
+                -d '{"name":"service","description":"The service module represents a kind of workload profile that describes how to run your application code."}';
+              
+              curl -X PUT "${KUSION_SERVER_ENDPOINT}/api/v1/modules/service" \
+                -H "Content-Type: application/json" \
+                -d '{"name":"service","doc":"https://www.kusionstack.io/docs/reference/modules/developer-schemas/workload/service"}';
+              
+              curl -X PUT "${KUSION_SERVER_ENDPOINT}/api/v1/modules/service" \
+                -H "Content-Type: application/json" \
+                -d '{"name":"service","url":"oci://ghcr.io/kusionstack/service"}';
+              
+              echo "Registering network module...";
+              curl -X POST "${KUSION_SERVER_ENDPOINT}/api/v1/modules" \
+                -H "Content-Type: application/json" \
+                -d '{"name":"network","url":"oci://ghcr.io/kusionstack/network"}';
+              
+              curl -X PUT "${KUSION_SERVER_ENDPOINT}/api/v1/modules/network" \
+                -H "Content-Type: application/json" \
+                -d '{"name":"network","description":"The network module represents a network accessory of workload, typically containing exposed ports and a load balancer."}';
+              
+              curl -X PUT "${KUSION_SERVER_ENDPOINT}/api/v1/modules/network" \
+                -H "Content-Type: application/json" \
+                -d '{"name":"network","doc":"https://www.kusionstack.io/docs/reference/modules/developer-schemas/network"}';
+              
+              curl -X PUT "${KUSION_SERVER_ENDPOINT}/api/v1/modules/network" \
+                -H "Content-Type: application/json" \
+                -d '{"name":"network","url":"oci://ghcr.io/kusionstack/network"}';
+  backoffLimit: 10
