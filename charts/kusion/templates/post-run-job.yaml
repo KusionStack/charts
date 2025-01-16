@@ -48,7 +48,7 @@ spec:
 
               curl -X PUT "${KUSION_SERVER_ENDPOINT}/api/v1/modules/kam" \
                 -H "Content-Type: application/json" \
-                -d '{"name":"kam","url":"oci://ghcr.io/kusionstack/kam"}';
+                -d '{"name":"kam","url":"git://github.com/KusionStack/kam"}';
 
               echo "Registering service module...";
               curl -X POST "${KUSION_SERVER_ENDPOINT}/api/v1/modules" \
