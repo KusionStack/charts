@@ -896,6 +896,28 @@ entries:
     urls:
     - https://github.com/KusionStack/charts/releases/download/kuperator-0.5.3/kuperator-0.5.3.tgz
     version: 0.5.3
+  kusion:
+  - apiVersion: v2
+    appVersion: 1.0.0
+    created: "2025-01-16T08:20:19.535481063Z"
+    description: A Helm chart for deploying Kusion - An Intent-Driven Platform Orchestrator
+    digest: df607bbf1f15d83873844709c5eefcd470f63dc084bf698172671d5547b5f466
+    home: https://github.com/KusionStack/kusion
+    icon: https://github.com/KusionStack/kusion/docs/logo.png
+    keywords:
+    - KusionStack
+    - kusion
+    maintainers:
+    - email: kusionstack@gmail.com
+      name: kusionstack
+      url: https://kusionstack.io/docs
+    name: kusion
+    sources:
+    - https://github.com/KusionStack/kusion
+    type: application
+    urls:
+    - https://github.com/KusionStack/charts/releases/download/kusion-0.1.0/kusion-0.1.0.tgz
+    version: 0.1.0
   operating:
   - apiVersion: v1
     appVersion: 0.5.1
@@ -1014,4 +1036,4 @@ entries:
     urls:
     - https://github.com/KusionStack/charts/releases/download/sample-operator-0.1.1/sample-operator-0.1.1.tgz
     version: 0.1.1
-generated: "2025-01-15T04:07:00.719848218Z"
+generated: "2025-01-16T08:20:19.535624781Z"
