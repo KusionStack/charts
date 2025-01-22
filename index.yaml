@@ -899,6 +899,27 @@ entries:
   kusion:
   - apiVersion: v2
     appVersion: 0.14.0
+    created: "2025-01-22T08:22:57.864744637Z"
+    description: Kusion - An Intent-Driven Platform Orchestrator
+    digest: 2442e2660db6b8ff93b9c9b328934b499508b0ad2a70de8bc710701067daa515
+    home: https://github.com/KusionStack/kusion
+    icon: https://github.com/KusionStack/kusion/docs/logo.png
+    keywords:
+    - KusionStack
+    - kusion
+    maintainers:
+    - email: kusionstack@gmail.com
+      name: kusionstack
+      url: https://kusionstack.io/docs
+    name: kusion
+    sources:
+    - https://github.com/KusionStack/kusion
+    type: application
+    urls:
+    - https://github.com/KusionStack/charts/releases/download/kusion-0.14.1/kusion-0.14.1.tgz
+    version: 0.14.1
+  - apiVersion: v2
+    appVersion: 0.14.0
     created: "2025-01-22T06:51:00.407542124Z"
     description: Kusion - An Intent-Driven Platform Orchestrator
     digest: 1d73d24cbe99bd559dbd48818d3e126058994d3b85ea3f7c3e9654f9ff99d88b
@@ -1057,4 +1078,4 @@ entries:
     urls:
     - https://github.com/KusionStack/charts/releases/download/sample-operator-0.1.1/sample-operator-0.1.1.tgz
     version: 0.1.1
-generated: "2025-01-22T06:51:00.407697683Z"
+generated: "2025-01-22T08:22:57.864885262Z"
