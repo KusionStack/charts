@@ -1,9 +1,9 @@
 apiVersion: v2
 name: kusion
-version: 0.1.0
+version: 0.14.0
 type: application
-appVersion: "1.0.0"
-description: A Helm chart for deploying Kusion - An Intent-Driven Platform Orchestrator
+appVersion: 0.14.0
+description: Kusion - An Intent-Driven Platform Orchestrator
 home: https://github.com/KusionStack/kusion
 icon: https://github.com/KusionStack/kusion/docs/logo.png
 maintainers:

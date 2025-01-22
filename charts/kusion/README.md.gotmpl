@@ -36,7 +36,7 @@ You may have to set your specific configurations if it is deployed into a produc
 All configurable parameters of the Kusion chart are detailed [here](#chart-parameters).
 
 ```shell
-helm install kusion-release kusionstack/kusion --set server.port=8080 --set mysql.enabled=true --set mysql.database=kusionDB
+helm install kusion-release kusionstack/kusion --set server.port=8080 --set mysql.enabled=true --set mysql.database=kusion
 ```
 
 ## Chart Parameters
@@ -48,7 +48,7 @@ The following table lists the configurable parameters of the chart and their def
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
 {{- range .Values }}
-  {{- if not (or (hasPrefix "global" .Key) (hasPrefix "server" .Key) (hasPrefix "mysql" .Key)) }}
+  {{- if not (or (hasPrefix "global" .Key) (hasPrefix "server" .Key) (hasPrefix "mysql" .Key) (hasPrefix "kubeconfig" .Key)) }}
 | {{ .Key }} | {{ .Type }} | {{ if .Default }}{{ .Default }}{{ else }}{{ .AutoDefault }}{{ end }} | {{ if .Description }}{{ .Description }}{{ else }}{{ .AutoDescription }}{{ end }} |
   {{- end }}
 {{- end }}
@@ -83,6 +83,18 @@ The MySQL database is used to store Kusion's persistent data.
 |-----|------|---------|-------------|
 {{- range .Values }}
   {{- if hasPrefix "mysql" .Key }}
+| {{ .Key }} | {{ .Type }} | {{ if .Default }}{{ .Default }}{{ else }}{{ .AutoDefault }}{{ end }} | {{ if .Description }}{{ .Description }}{{ else }}{{ .AutoDescription }}{{ end }} |
+  {{- end }}
+{{- end }}
+
+### KubeConfig
+
+The KubeConfig is used to store the KubeConfig files for the Kusion Server.
+
+| Key | Type | Default | Description |
+|-----|------|---------|-------------|
+{{- range .Values }}
+  {{- if hasPrefix "kubeconfig" .Key }}
 | {{ .Key }} | {{ .Type }} | {{ if .Default }}{{ .Default }}{{ else }}{{ .AutoDefault }}{{ end }} | {{ if .Description }}{{ .Description }}{{ else }}{{ .AutoDescription }}{{ end }} |
   {{- end }}
 {{- end }}
