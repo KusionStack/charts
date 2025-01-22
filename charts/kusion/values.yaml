@@ -17,7 +17,7 @@ server:
     # -- Repository for Kusion server image
     repo: kusionstack/kusion
     # -- Tag for Kusion server image. Defaults to the chart's appVersion if not specified
-    tag: "latest"
+    tag: ""
     # -- Image pull policy
     imagePullPolicy: IfNotPresent
   # -- Resource limits and requests for the kusion server pods
@@ -114,12 +114,15 @@ mysql:
     accessModes:
       - ReadWriteOnce
 
-# -- Volume mount path for KubeConfig files
-kubeConfigVolumeMountPath: /var/run/secrets/kubernetes.io/kubeconfigs/
-
 # KubeConfig configuration
-secrets:
-  kubeConfigs:
-    - key: "kubeconfig-0"
-      value: |
-        Please fill in your KubeConfig contents here.
+kubeconfig:
+  # -- Volume mount path for KubeConfig files
+  kubeConfigVolumeMountPath: /var/run/secrets/kubernetes.io/kubeconfigs/
+  # -- KubeConfig contents map
+  kubeConfigs: {}
+  # Example structure:
+  #   kubeConfigs:
+  #     kubeconfig0: |
+  #       Please fill in your KubeConfig contents here.
+  #     kubeconfig1: |
+  #       Please fill in your KubeConfig contents here.

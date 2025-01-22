@@ -32,7 +32,7 @@ spec:
     spec:
       containers:
         - name: {{ .Values.server.name }}
-          image: {{ include "kusion.realImage" (dict "context" . "repo" .Values.server.image.repo "tag" .Values.server.image.tag) }}
+          image: {{ include "kusion.realImage" (dict "context" . "repo" .Values.server.image.repo "tag" .Values.server.image.tag "needV" (not (hasPrefix "v" .Values.server.image.tag))) }}
           imagePullPolicy: {{ .Values.server.image.imagePullPolicy }}
           ports:
             - name: http
@@ -84,7 +84,7 @@ spec:
             {{- toYaml .Values.server.resources | nindent 12 }}
           volumeMounts: 
             - name: kubeconfig-volume
-              mountPath: {{ .Values.kubeConfigVolumeMountPath }}
+              mountPath: {{ .Values.kubeconfig.kubeConfigVolumeMountPath }}
       volumes: 
         - name: kubeconfig-volume
           secret: 
@@ -97,6 +97,14 @@ metadata:
   namespace: {{ .Values.namespace }}
 type: Opaque
 data: 
-  {{- range .Values.secrets.kubeConfigs }}
-  {{ .key }}: {{ .value | b64enc | quote }}
+  {{- range $key, $value := .Values.kubeconfig.kubeConfigs }}
+  {{- if kindIs "string" $value }}
+    {{- if contains " " $value }}
+      {{/* if contains space, it is a plain yaml format */}}
+      {{ $key }}: {{ $value | b64enc | quote }}
+    {{- else }}
+      {{/* if it is a whole string without spaces, it is already base64 encoded */}}
+      {{ $key }}: {{ $value | quote }}
+    {{- end }}
+  {{- end }}
   {{- end }}

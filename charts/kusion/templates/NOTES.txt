@@ -16,7 +16,7 @@ MySQL is enabled. The following credentials were configured:
 {{- end }}
 
 The Kusion server can be accessed:
-  - Within cluster: {{ .Values.server.name }}.{{ .Values.namespace }}.svc:{{ .Values.server.port }}
+  - Within cluster: {{ .Values.server.name }}.{{ .Values.namespace }}.svc.cluster.local:{{ .Values.server.port }}
 {{- if eq .Values.server.serviceType "NodePort" }}
   - From outside: <node-ip>:<node-port>
     You can get the node port by running:
