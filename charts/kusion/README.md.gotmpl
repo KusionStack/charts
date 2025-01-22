@@ -16,27 +16,71 @@
 
 ## Installing the Chart
 
-First, add the Kusion chart repo to your local repository.
+> Note: A valid kubeconfig configuration is required for Kusion to function properly. You must either use the installation script, provide your own kubeconfig in values.yaml, or set it through the --set parameter
+
+To install Kusion, you have the following options:
+
+### 1. Use the installation script (recommended)
 
 ```shell
-helm repo add kusionstack https://kusionstack.github.io/charts
-helm repo update
+./scripts/install-kusion-server.sh <kubeconfig_key1=kubeconfig_path1> <kubeconfig_key2=kubeconfig_path2> ...
+```
+
+**Parameters:**
+
+- **kubeconfig_key**: The key for the kubeconfig file. It should be unique and not contain spaces.
+
+- **kubeconfig_path**: The path to the kubeconfig file.
+
+### 2. Manual installation with your own kubeconfig
+
+Edit the [values file](values.yaml) to add your kubeconfig content
+
+```yaml
+# Replace the content below with your actual kubeconfig
+kubeconfig:
+  kubeConfigs:
+    kubeconfig0: |
+      Please fill in your KubeConfig contents here.
+    kubeconfig1: |
+      Please fill in your KubeConfig contents here.
+```
+
+Then install the chart with the custom values file:
+
+```shell
+helm install kusion-release ./kusion
+```
+
+### 3. Install with specific configurations
+
+First, you need to base64 encode your kubeconfig files.
+
+```shell
+KUBECONFIG_CONTENT1=$(base64 -w 0 /path/to/your/kubeconfig1)
+KUBECONFIG_CONTENT2=$(base64 -w 0 /path/to/your/kubeconfig2)
 ```
 
 Then you can use the following command to install the latest version of Kusion.
 
 ```shell
-helm install kusion-release kusionstack/kusion
+helm install kusion-release kusionstack/kusion \
+--set kubeconfig.kubeConfigs.kubeconfig0="$KUBECONFIG_CONTENT1" \
+--set kubeconfig.kubeConfigs.kubeconfig1="$KUBECONFIG_CONTENT2"
 ```
 
-> Note that installing this chart directly means it will use the [default template values](./values.yaml) for Kusion.
+You may also have to set your specific configurations if it is deployed into a production cluster, or you want to customize the chart configuration, such as `port`, `replicas`, `database` etc.
 
-You may have to set your specific configurations if it is deployed into a production cluster, or you want to customize the chart configuration, such as `resources`, `replicas`, `port` etc.
-
-All configurable parameters of the Kusion chart are detailed [here](#chart-parameters).
+> All configurable parameters of the Kusion chart are detailed [here](#chart-parameters).
 
 ```shell
-helm install kusion-release kusionstack/kusion --set server.port=8080 --set mysql.enabled=true --set mysql.database=kusion
+helm install kusion-release kusionstack/kusion \
+--set server.port=8080 \
+--set server.replicas=3 \
+--set mysql.enabled=true \
+--set mysql.database=kusion \
+--set kubeconfig.kubeConfigs.kubeconfig0="$KUBECONFIG_CONTENT1" \
+--set kubeconfig.kubeConfigs.kubeconfig1="$KUBECONFIG_CONTENT2"
 ```
 
 ## Chart Parameters
