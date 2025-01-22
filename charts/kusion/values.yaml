@@ -122,7 +122,7 @@ kubeconfig:
   kubeConfigs: {}
   # Example structure:
   #   kubeConfigs:
-  #     kubeconfig0: |
+  #     kubeconfig-0: |
   #       Please fill in your KubeConfig contents here.
-  #     kubeconfig1: |
+  #     kubeconfig-1: |
   #       Please fill in your KubeConfig contents here.
