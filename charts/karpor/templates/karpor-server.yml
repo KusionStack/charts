@@ -16,7 +16,7 @@ kind: Secret
 metadata:
   name: karpor-auth
   namespace: {{ .Values.namespace }}
-  labesl: {{- include "karpor.labels" (dict "context" . "component" .Values.server.name) | nindent 4 }}
+  labels: {{- include "karpor.labels" (dict "context" . "component" .Values.server.name) | nindent 4 }}
 type: Opaque
 data:
   aiAuthToken: {{ .Values.server.ai.authToken | b64enc | quote }}
