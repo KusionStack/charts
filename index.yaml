@@ -75,6 +75,28 @@ entries:
     version: 0.1.0
   karpor:
   - apiVersion: v2
+    appVersion: 0.6.1
+    created: "2025-01-27T13:56:47.121179356Z"
+    description: A modern kubernetes visualization tool (Karpor).
+    digest: 92d7a676083fe465f8395f9c77bfc9d12b90ee4b47c6b6a0fd3f82b04245f74d
+    home: https://github.com/KusionStack/karpor
+    icon: https://kusionstack.io/karpor/assets/logo/logo.svg
+    keywords:
+    - KusionStack
+    - karpor
+    maintainers:
+    - email: kusionstack@gmail.com
+      name: kusionstack
+      url: https://kusionstack.io/karpor
+    name: karpor
+    sources:
+    - https://github.com/KusionStack/charts/tree/master/charts/karpor
+    - https://github.com/KusionStack/karpor
+    type: application
+    urls:
+    - https://github.com/KusionStack/charts/releases/download/karpor-0.7.3/karpor-0.7.3.tgz
+    version: 0.7.3
+  - apiVersion: v2
     appVersion: 0.6.0
     created: "2025-01-27T13:07:50.790948366Z"
     description: A modern kubernetes visualization tool (Karpor).
@@ -1122,4 +1144,4 @@ entries:
     urls:
     - https://github.com/KusionStack/charts/releases/download/sample-operator-0.1.1/sample-operator-0.1.1.tgz
     version: 0.1.1
-generated: "2025-01-27T13:07:50.791328925Z"
+generated: "2025-01-27T13:56:47.12163775Z"
