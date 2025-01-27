@@ -48,8 +48,9 @@ server:
     authToken: ""
     # -- Base URL of the AI service. e.g., "https://api.openai.com/v1".
     baseUrl: ""
-    # -- Backend service or platform that the AI model is hosted on. e.g., "openai". If the backend you are using
-    # is compatible with OpenAI, then there is no need to make any changes here.
+    # -- Backend service or platform that the AI model is hosted on. Available options:
+    # <br/>- `"openai"`: OpenAI API (default)<br/>- `"azureopenai"`: Azure OpenAI Service<br/>- `"huggingface"`: Hugging Face API<br/>
+    # If the backend you are using is compatible with OpenAI, then there is no need to make any changes here.
     backend: "openai"
     # -- Name or identifier of the AI model to be used. e.g., "gpt-3.5-turbo".
     model: "gpt-3.5-turbo"
