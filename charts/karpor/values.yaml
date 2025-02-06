@@ -60,6 +60,17 @@ server:
     # -- Top-p (nucleus sampling) parameter for the AI model. This controls Controls the probability mass to consider for
     # sampling, where a higher value leads to greater diversity in the generated content (typically ranging from 0 to 1)
     topP: 1.0
+    # -- Proxy configuration for AI service connections
+    proxy:
+      # -- Enable proxy settings for AI service connections. When false, proxy settings will be ignored.
+      enabled: false
+      # -- HTTP proxy URL for AI service connections (e.g., "http://proxy.example.com:8080")
+      httpProxy: ""
+      # -- HTTPS proxy URL for AI service connections (e.g., "https://proxy.example.com:8080")
+      httpsProxy: ""
+      # -- No proxy configuration for AI service connections (e.g., "localhost,127.0.0.1,example.com")
+      noProxy: ""
+
 
 # Configuration for Karpor syncer
 syncer:

@@ -65,6 +65,18 @@ spec:
             {{- if .Values.server.ai.topP }}
             - --ai-top-p={{ .Values.server.ai.topP }}
             {{- end }}
+            {{- if .Values.server.ai.proxy.enabled }}
+            - --ai-proxy-enabled=true
+            {{- if .Values.server.ai.proxy.httpProxy }}
+            - --ai-http-proxy={{ .Values.server.ai.proxy.httpProxy }}
+            {{- end }}
+            {{- if .Values.server.ai.proxy.httpsProxy }}
+            - --ai-https-proxy={{ .Values.server.ai.proxy.httpsProxy }}
+            {{- end }}
+            {{- if .Values.server.ai.proxy.noProxy }}
+            - --ai-no-proxy={{ .Values.server.ai.proxy.noProxy }}
+            {{- end }}
+            {{- end }}
             {{- end }}
           command:
             - /karpor
