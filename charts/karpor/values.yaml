@@ -71,7 +71,6 @@ server:
       # -- No proxy configuration for AI service connections (e.g., "localhost,127.0.0.1,example.com")
       noProxy: ""
 
-
 # Configuration for Karpor syncer
 syncer:
   # -- Component name for Karpor syncer.
