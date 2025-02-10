@@ -34,3 +34,23 @@ Real image.
 .repo | join "/") }}:{{ if .needV }}v{{ end }}{{ default .context.Chart.AppVersion .tag }}
 {{- end -}}
 
+{{/*
+ElasticSearch URL.
+*/}}
+{{- define "elasticsearch.url" -}}
+{{ if .Values.search.external }}{{.Values.search.external.host}}:{{.Values.search.external.port}}{{else}}http://elasticsearch.{{ .Values.namespace }}.svc:{{ .Values.elasticsearch.port }}{{end}}
+{{- end -}}
+
+{{/*
+Meilisearch URL.
+*/}}
+{{- define "meilisearch.url" -}}
+{{ if .Values.search.external }}{{.Values.search.external.host}}:{{.Values.search.external.port}}{{else}}http://meilisearrch.{{ .Values.namespace }}.svc:{{ .Values.elasticsearch.port }}{{end}}
+{{- end -}}
+
+{{/*
+Search URL Args.
+*/}}
+{{- define "karpor.searchURLArgs" -}}
+{{ if .Values.search.engine eq "meilisearch" }} {{ include "elasticsearch.url"}} {{else}} {{ include "meilisearch.url"}}{{ end }}
+{{- end -}}

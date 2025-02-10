@@ -1,3 +1,4 @@
+{{- if and (.Values.search.engine eq "elasticsearch") (not .Values.search.external) }}
 apiVersion: v1
 kind: Service
 metadata:
@@ -56,3 +57,4 @@ spec:
       volumes:
         - emptyDir: {}
           name: data
+  {{- end }}

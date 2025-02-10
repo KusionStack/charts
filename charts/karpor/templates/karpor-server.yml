@@ -1,3 +1,6 @@
+{{- if ( .Values.search.engine ne "elasticsearch") and ( .Values.search.engine ne "meilisearch") }}
+{{ fail "values.search.mode must be one of [elasticsearch,meilisearch] "}}
+{{- end }}
 apiVersion: v1
 kind: Service
 metadata:
@@ -41,9 +44,16 @@ spec:
     spec:
       containers:
         - args:
-            - --search-storage-type=elasticsearch
-            - --elastic-search-addresses=http://elasticsearch.{{ .Values.namespace }}.svc:{{ .Values.elasticsearch.port }}
-            - --etcd-servers=http://etcd.{{ .Values.namespace }}.svc:{{ .Values.etcd.port }}
+            - --search-storage-type={{.Values.search.engine}}
+            - "--search-url={{ include "karpor.searchURLArgs" }}"
+            {{- with .Values.search.external.username}}
+            - "--search-user={{.}}"
+            {{- end }}
+            {{- with .Values.search.external.password}}
+            - "--search-password={{.}}"
+            {{- end }}
+{{/*            - --elastic-search-addresses=http://elasticsearch.{{ .Values.namespace }}.svc:{{ .Values.elasticsearch.port }}*/}}
+{{/*            - --etcd-servers=http://etcd.{{ .Values.namespace }}.svc:{{ .Values.etcd.port }}*/}}
             - --secure-port={{ .Values.server.port }}
             - --client-ca-file=/etc/karpor/ca.crt
             - --service-account-signing-key-file=/etc/karpor/ca.key
