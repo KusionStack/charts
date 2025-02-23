@@ -16,7 +16,13 @@
 
 ## Installing the Chart
 
-> Note: A valid kubeconfig configuration is required for Kusion to function properly. You must either use the installation script, provide your own kubeconfig in values.yaml, or set it through the --set parameter
+> **Important:** Kusion requires a valid kubeconfig configuration to function properly. You can provide it via:
+> - Installation script (recommended)
+> - Custom values.yaml file
+> - Helm --set parameter
+
+> **Note:** Default kubeconfig path is `/var/run/secrets/kubernetes.io/kubeconfigs/` 
+> To use a different path, set `kubeconfig.kubeConfigVolumeMountPath` to your desired path.
 
 To install Kusion, you have the following options:
 
@@ -40,9 +46,9 @@ Edit the [values file](values.yaml) to add your kubeconfig content
 # Replace the content below with your actual kubeconfig
 kubeconfig:
   kubeConfigs:
-    kubeconfig0: |
+    kubeconfig-0: |
       Please fill in your KubeConfig contents here.
-    kubeconfig1: |
+    kubeconfig-1: |
       Please fill in your KubeConfig contents here.
 ```
 
@@ -57,16 +63,16 @@ helm install kusion-release ./kusion
 First, you need to base64 encode your kubeconfig files.
 
 ```shell
-KUBECONFIG_CONTENT1=$(base64 -w 0 /path/to/your/kubeconfig1)
-KUBECONFIG_CONTENT2=$(base64 -w 0 /path/to/your/kubeconfig2)
+KUBECONFIG_CONTENT1=$(cat /path/to/your/kubeconfig-1 | base64 | tr -d '\n')
+KUBECONFIG_CONTENT2=$(cat /path/to/your/kubeconfig-2 | base64 | tr -d '\n')
 ```
 
 Then you can use the following command to install the latest version of Kusion.
 
 ```shell
 helm install kusion-release kusionstack/kusion \
---set kubeconfig.kubeConfigs.kubeconfig0="$KUBECONFIG_CONTENT1" \
---set kubeconfig.kubeConfigs.kubeconfig1="$KUBECONFIG_CONTENT2"
+--set kubeconfig.kubeConfigs.kubeconfig-0="$KUBECONFIG_CONTENT1" \
+--set kubeconfig.kubeConfigs.kubeconfig-1="$KUBECONFIG_CONTENT2"
 ```
 
 You may also have to set your specific configurations if it is deployed into a production cluster, or you want to customize the chart configuration, such as `port`, `replicas`, `database` etc.
@@ -79,8 +85,8 @@ helm install kusion-release kusionstack/kusion \
 --set server.replicas=3 \
 --set mysql.enabled=true \
 --set mysql.database=kusion \
---set kubeconfig.kubeConfigs.kubeconfig0="$KUBECONFIG_CONTENT1" \
---set kubeconfig.kubeConfigs.kubeconfig1="$KUBECONFIG_CONTENT2"
+--set kubeconfig.kubeConfigs.kubeconfig-0="$KUBECONFIG_CONTENT1" \
+--set kubeconfig.kubeConfigs.kubeconfig-1="$KUBECONFIG_CONTENT2"
 ```
 
 ## Chart Parameters
