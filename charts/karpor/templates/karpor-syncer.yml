@@ -21,9 +21,9 @@ spec:
           args:
             - syncer
             - --search-storage-type={{.Values.search.engine}}
-            - "--search-url={{ include "karpor.searchURLArgs" }}"
+            - "--search-addresses={{ include "karpor.searchURL" }}"
             {{- with .Values.search.external.username}}
-            - "--search-user={{.}}"
+            - "--search-username={{.}}"
             {{- end }}
             {{- with .Values.search.external.password}}
             - "--search-password={{.}}"

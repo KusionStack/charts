@@ -100,11 +100,10 @@ search:
   # if external is set to be true.
   # and fill the connection information in "external" section
   external:
-    enabled: true
-    host: "192.168.0.1"
-    port: "5432"
-    username: "user"
-    password: "password"
+    enabled: false
+    addresses: "192.168.0.1:3456"
+    username: ""
+    password: ""
 
 # Configuration for meilisearch
 meilisearch:

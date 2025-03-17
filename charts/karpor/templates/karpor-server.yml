@@ -45,15 +45,15 @@ spec:
       containers:
         - args:
             - --search-storage-type={{.Values.search.engine}}
-            - "--search-url={{ include "karpor.searchURLArgs" }}"
+            - "--search-addresses={{ include "karpor.searchURL" }}"
             {{- with .Values.search.external.username}}
-            - "--search-user={{.}}"
+            - "--search-username={{.}}"
             {{- end }}
             {{- with .Values.search.external.password}}
             - "--search-password={{.}}"
             {{- end }}
 {{/*            - --elastic-search-addresses=http://elasticsearch.{{ .Values.namespace }}.svc:{{ .Values.elasticsearch.port }}*/}}
-{{/*            - --etcd-servers=http://etcd.{{ .Values.namespace }}.svc:{{ .Values.etcd.port }}*/}}
+            - "--etcd-servers=http://etcd.{{ .Values.namespace }}.svc:{{ .Values.etcd.port }}"
             - --secure-port={{ .Values.server.port }}
             - --client-ca-file=/etc/karpor/ca.crt
             - --service-account-signing-key-file=/etc/karpor/ca.key

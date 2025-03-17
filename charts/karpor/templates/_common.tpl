@@ -38,19 +38,19 @@ Real image.
 ElasticSearch URL.
 */}}
 {{- define "elasticsearch.url" -}}
-{{ if .Values.search.external }}{{.Values.search.external.host}}:{{.Values.search.external.port}}{{else}}http://elasticsearch.{{ .Values.namespace }}.svc:{{ .Values.elasticsearch.port }}{{end}}
+{{ if .Values.search.external }}{{ .Values.search.external.addresses | join "," }}{{else}}http://elasticsearch.{{ .Values.namespace }}.svc:{{ .Values.meilisearch.port }}{{end}}
 {{- end -}}
 
 {{/*
 Meilisearch URL.
 */}}
 {{- define "meilisearch.url" -}}
-{{ if .Values.search.external }}{{.Values.search.external.host}}:{{.Values.search.external.port}}{{else}}http://meilisearrch.{{ .Values.namespace }}.svc:{{ .Values.elasticsearch.port }}{{end}}
+{{ if .Values.search.external }}{{ .Values.search.external.addresses | join "," }}{{else}}http://meilisearrch.{{ .Values.namespace }}.svc:{{ .Values.elasticsearch.port }}{{end}}
 {{- end -}}
 
 {{/*
 Search URL Args.
 */}}
-{{- define "karpor.searchURLArgs" -}}
-{{ if .Values.search.engine eq "meilisearch" }} {{ include "elasticsearch.url"}} {{else}} {{ include "meilisearch.url"}}{{ end }}
+{{- define "karpor.searchURL" -}}
+{{ if .Values.search.engine eq "meilisearch" }} {{ include "meilisearch.url"}} {{else}} {{ include "elasticsearch.url"}}{{ end }}
 {{- end -}}
