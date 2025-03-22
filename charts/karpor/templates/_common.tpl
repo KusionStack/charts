@@ -38,19 +38,66 @@ Real image.
 ElasticSearch URL.
 */}}
 {{- define "elasticsearch.url" -}}
-{{ if .Values.search.external }}{{ .Values.search.external.addresses | join "," }}{{else}}http://elasticsearch.{{ .Values.namespace }}.svc:{{ .Values.meilisearch.port }}{{end}}
+{{ if .Values.search.external.enabled }}{{ .Values.search.external.addresses | join "," }}{{else}}http://elasticsearch.{{ .Values.namespace }}.svc:{{ .Values.elasticsearch.port }}{{end}}
 {{- end -}}
 
 {{/*
 Meilisearch URL.
 */}}
 {{- define "meilisearch.url" -}}
-{{ if .Values.search.external }}{{ .Values.search.external.addresses | join "," }}{{else}}http://meilisearrch.{{ .Values.namespace }}.svc:{{ .Values.elasticsearch.port }}{{end}}
+{{ if .Values.search.external.enabled }}{{ .Values.search.external.addresses | join "," }}{{else}}http://meilisearch.{{ .Values.namespace }}.svc:{{ .Values.meilisearch.port }}{{end}}
 {{- end -}}
+
+
 
 {{/*
 Search URL Args.
 */}}
 {{- define "karpor.searchURL" -}}
-{{ if .Values.search.engine eq "meilisearch" }} {{ include "meilisearch.url"}} {{else}} {{ include "elasticsearch.url"}}{{ end }}
+{{ if eq .Values.search.engine "meilisearch" }}{{ include "meilisearch.url" .}}{{else}}{{ include "elasticsearch.url" . }}{{ end }}
 {{- end -}}
+
+{{/*
+Search User Args.
+*/}}
+{{- define "karpor.searchUsername" -}}
+{{ if  eq .Values.search.engine "meilisearch" }}{{ include "meilisearch.user" . }}{{else}}{{ include "elasticsearch.user" . }}{{ end }}
+{{- end -}}
+
+{{/*
+Search Password Args.
+*/}}
+{{- define "karpor.searchPassword" -}}
+{{ if  eq  .Values.search.engine "meilisearch" }}{{ include "meilisearch.password" . }}{{else}}{{ include "elasticsearch.password" . }}{{ end }}
+{{- end -}}
+
+{{/*
+Meilisearch User.
+*/}}
+{{- define "meilisearch.user" -}}
+{{ if .Values.search.external.enabled }}{{ .Values.search.external.username }}{{else}} {{ "" }}{{end}}
+{{- end -}}
+
+{{/*
+Meilisearch Password.
+*/}}
+{{- define "meilisearch.password" -}}
+{{ if .Values.search.external.enabled }}{{ .Values.search.external.password }}{{else}}{{ .Values.meilisearch.key }}{{end}}
+{{- end -}}
+
+{{/*
+ElasticSearch User.
+*/}}
+{{- define "elasticsearch.user" -}}
+{{ if .Values.search.external.enabled }}{{ .Values.search.external.username }}{{else}}{{ "" }}{{end}}
+{{- end -}}
+
+{{/*
+ElasticSearch Password.
+*/}}
+{{- define "elasticsearch.password" -}}
+{{ if .Values.search.external.enabled }}{{ .Values.search.external.password }}{{else}}{{ "" }}{{end}}
+{{- end -}}
+
+
+

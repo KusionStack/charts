@@ -1,4 +1,4 @@
-{{- if and (.Values.search.engine eq "meilisearch") (not .Values.search.external) }}
+{{- if and (eq .Values.search.engine  "meilisearch") (not .Values.search.external.enabled ) }}
 apiVersion: v1
 kind: Service
 metadata:
@@ -25,7 +25,7 @@ spec:
   template:
     metadata:
       labels:
-      {{- include "karpor.selectorLabels" (dict "context" . "component" .Values.meilisearch.name) | nindent 6 }}
+      {{- include "karpor.selectorLabels" (dict "context" . "component" .Values.meilisearch.name) | nindent 8 }}
     spec:
       volumes:
         - emptyDir: {}
@@ -37,6 +37,7 @@ spec:
             - meilisearch
             - --master-key
             - {{ .Values.meilisearch.key}}
+            - --experimental-contains-filter
           {{ if .Values.meilisearch.analytics }}
             - --no-analytics
           {{ end }}

@@ -25,9 +25,9 @@ server:
   port: 7443
   image:
     # -- Repository for Karpor server image.
-    repo: kusionstack/karpor
+    repo: karpor
     # -- Tag for Karpor server image. Defaults to the chart's appVersion if not specified.
-    tag: ""
+    tag: "latest"
   # -- Resource limits and requests for the karpor server pods.
   resources:
     requests:
@@ -81,9 +81,9 @@ syncer:
   port: 7443
   image:
     # -- Repository for Karpor syncer image.
-    repo: kusionstack/karpor
+    repo: karpor
     # -- Tag for Karpor syncer image. Defaults to the chart's appVersion if not specified.
-    tag: ""
+    tag: "latest"
   # -- Resource limits and requests for the karpor syncer pods.
   resources:
     requests:
@@ -96,7 +96,7 @@ syncer:
       ephemeral-storage: 10Gi
 search:
   # elasticsearch or meilisearch
-  engine: elasticsearch
+  engine: meilisearch
   # if external is set to be true.
   # and fill the connection information in "external" section
   external:
@@ -121,12 +121,12 @@ meilisearch:
     # -- Repository for meilisearch image.
     repo: getmeili/meilisearch
     # -- Specific tag for meilisearch image.
-    tag: "v1.12"
+    tag: "v1.13"
   # -- Resource limits and requests for the karpor meilisearch pods.
   resources:
     requests:
-      cpu: "2"
-      memory: 4Gi
+      cpu: 500m
+      memory: 1Gi
       ephemeral-storage: 10Gi
     limits:
       cpu: "2"

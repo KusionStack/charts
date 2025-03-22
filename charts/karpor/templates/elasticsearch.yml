@@ -1,4 +1,4 @@
-{{- if and (.Values.search.engine eq "elasticsearch") (not .Values.search.external) }}
+{{- if and ( eq  .Values.search.engine "elasticsearch") (not .Values.search.external) }}
 apiVersion: v1
 kind: Service
 metadata:
@@ -44,7 +44,7 @@ spec:
             - name: ES_JAVA_OPTS
               value: -Xms1g -Xmx1g
           image: {{ include "karpor.realImage" (dict "context" . "repo" .Values.elasticsearch.image.repo "tag" .Values.elasticsearch.image.tag) }}
-          imagePullPolicy: {{ .Values.global.image.imagePullPolicy }} 
+          imagePullPolicy: {{ .Values.global.image.imagePullPolicy }}
           name: elasticsearch
           ports:
             - containerPort: {{ .Values.elasticsearch.port }}

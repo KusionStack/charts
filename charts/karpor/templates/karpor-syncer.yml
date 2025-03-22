@@ -20,19 +20,15 @@ spec:
             - /karpor
           args:
             - syncer
-            - --search-storage-type={{.Values.search.engine}}
-            - "--search-addresses={{ include "karpor.searchURL" }}"
-            {{- with .Values.search.external.username}}
-            - "--search-username={{.}}"
-            {{- end }}
-            {{- with .Values.search.external.password}}
-            - "--search-password={{.}}"
-            {{- end }}
+            - "--search-storage-type={{ .Values.search.engine }}"
+            - "--search-addresses={{ include "karpor.searchURL" . }}"
+            - "--search-username={{ include "karpor.searchUsername" .}}"
+            - "--search-password={{ include "karpor.searchPassword" .}}"
           env:
             - name: KUBECONFIG
               value: /etc/karpor/config
           image: {{ include "karpor.realImage" (dict "context" . "repo" .Values.syncer.image.repo "tag" .Values.syncer.image.tag "needV" (not (hasPrefix "v" .Values.syncer.image.tag))) }}
-          imagePullPolicy: {{ .Values.global.image.imagePullPolicy }} 
+          imagePullPolicy: {{ .Values.global.image.imagePullPolicy }}
           name: karpor-syncer
           ports:
             - containerPort: {{ .Values.syncer.port }}
