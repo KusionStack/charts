@@ -38,7 +38,7 @@ spec:
             - --master-key
             - {{ .Values.meilisearch.key}}
             - --experimental-contains-filter
-          {{ if .Values.meilisearch.analytics }}
+          {{ if .Values.meilisearch.noAnalytics }}
             - --no-analytics
           {{ end }}
 

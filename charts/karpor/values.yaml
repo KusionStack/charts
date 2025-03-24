@@ -96,14 +96,17 @@ syncer:
       memory: 1Gi
       ephemeral-storage: 10Gi
 search:
-  # elasticsearch or meilisearch
+  # -- Engine for storage,may elasticsearch or meilisearch
   engine: elasticsearch
-  # if external is set to be true.
-  # and fill the connection information in "external" section
   external:
+    # -- If external is set to be true. and fill the connection information in "external" section
     enabled: false
-    addresses: "192.168.0.1:3456"
+    # -- Address for search engine
+    addresses:
+      - "192.168.0.1:3456"
+    # -- Username for search engine
     username: ""
+    # -- password for search engine
     password: ""
 
 # Configuration for meilisearch
@@ -114,10 +117,10 @@ meilisearch:
   replicas: 1
   # -- Port for meilisearch.
   port: 7700
-  # default master key
+  # -- Default master key
   key: danger!changeIt
-  # if set to be false, add flag --no-analytics
-  analytics: false
+  # -- If set to be true, add flag --no-analytics
+  noAnalytics: true
   image:
     # -- Repository for meilisearch image.
     repo: getmeili/meilisearch
