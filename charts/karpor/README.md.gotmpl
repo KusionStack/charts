@@ -48,7 +48,7 @@ The following table lists the configurable parameters of the chart and their def
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
 {{- range .Values }}
-  {{- if not (or  (hasPrefix "global" .Key) (hasPrefix "server" .Key) (hasPrefix "syncer" .Key) (hasPrefix "elasticsearch" .Key) (hasPrefix "etcd" .Key) (hasPrefix "job" .Key) ) }}
+  {{- if not (or  (hasPrefix "global" .Key) (hasPrefix "server" .Key) (hasPrefix "syncer" .Key) (hasPrefix "elasticsearch" .Key) (hasPrefix "meilisearch" .Key) (hasPrefix "etcd" .Key) (hasPrefix "job" .Key) ) }}
 | {{ .Key }} | {{ .Type }} | {{ if .Default }}{{ .Default }}{{ else }}{{ .AutoDefault }}{{ end }} | {{ if .Description }}{{ .Description }}{{ else }}{{ .AutoDescription }}{{ end }} |
   {{- end }}
 {{- end }}
@@ -98,6 +98,17 @@ The ElasticSearch Component to store the synchronized resources and user data.
 | {{ .Key }} | {{ .Type }} | {{ if .Default }}{{ .Default }}{{ else }}{{ .AutoDefault }}{{ end }} | {{ if .Description }}{{ .Description }}{{ else }}{{ .AutoDescription }}{{ end }} |
   {{- end }}
 {{- end }}
+
+The MeiliSearch Component to store the synchronized resources and user data.
+
+| Key | Type | Default | Description |
+|-----|------|---------|-------------|
+{{- range .Values }}
+  {{- if hasPrefix "meilisearch" .Key }}
+| {{ .Key }} | {{ .Type }} | {{ if .Default }}{{ .Default }}{{ else }}{{ .AutoDefault }}{{ end }} | {{ if .Description }}{{ .Description }}{{ else }}{{ .AutoDescription }}{{ end }} |
+  {{- end }}
+{{- end }}
+
 
 ### ETCD
 
