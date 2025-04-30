@@ -22,7 +22,7 @@ for arg in "$@"; do
     fi
 
     # base64 encode
-    content=$(base64 -w 0 "$path")
+    content=$(cat "$path" | base64 | tr -d '\n')
 
     # Build helm --set argument
     KUBECONFIG_ARGS="${KUBECONFIG_ARGS} --set kubeconfig.kubeConfigs.${key}=${content}"
