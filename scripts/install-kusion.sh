@@ -1,6 +1,6 @@
 #!/bin/bash
 # check args
-if [ "$#" -lt 2 ]; then
+if [ "$#" -lt 1 ]; then
     echo "Usage: $0 <kubeconfig_key1=kubeconfig_path1> [kubeconfig_key2=kubeconfig_path2 ...]"
     exit 1
 fi
@@ -21,8 +21,19 @@ for arg in "$@"; do
         exit 1
     fi
 
+    # Detect operating system
+    os_type=$(uname -s)
+
     # base64 encode
-    content=$(base64 -w 0 "$path")
+    # Choose base64 parameter according to the operating system
+    if [[ "$os_type" == "Linux" ]]; then
+        content=$(base64 -w 0 "$path")
+    elif [[ "$os_type" == "Darwin" ]]; then
+        content=$(base64 -b 0 -i "$path")
+    else
+        echo "Unsupported OS: $os_type"
+        exit 1
+    fi
 
     # Build helm --set argument
     KUBECONFIG_ARGS="${KUBECONFIG_ARGS} --set kubeconfig.kubeConfigs.${key}=${content}"
