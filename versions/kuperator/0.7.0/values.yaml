@@ -1,0 +1,36 @@
+managerReplicas: 3
+
+project: kuperator
+namespace: kusionstack-system
+namespaceEnabled: true
+
+webhookServiceName: kusionstack-controller-manager
+serviceAccountName: kusionstack-controller-manager
+
+sharding:
+  enabled: false
+  isDemo: false
+  replicas: 5
+  size: 2
+
+controlPlane: kusionstack-kuperator
+
+image:
+  tag: v0.7.0
+  repo: kusionstack/kuperator
+  pullPolicy: IfNotPresent
+
+resources:
+  limits:
+    cpu: 500m
+    memory: 128Mi
+  requests:
+    cpu: 10m
+    memory: 64Mi
+
+commonLabels:
+  app.kubernetes.io/part-of: kuperator
+
+
+
+
