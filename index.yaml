@@ -1005,6 +1005,18 @@ entries:
     version: 0.3.18
   kuperator:
   - apiVersion: v1
+    appVersion: 0.7.1
+    created: "2025-11-28T08:33:47.248366457Z"
+    description: Helm chart for KusionStack Kuperator
+    digest: de5e3fd3f2c1a5d8cdf62f1654f98e0116acb871b229d05077fd34f2d3d0ef6a
+    home: https://KusionStack.io
+    name: kuperator
+    sources:
+    - https://github.com/KusionStack/kuperator
+    urls:
+    - https://github.com/KusionStack/charts/releases/download/kuperator-0.7.1/kuperator-0.7.1.tgz
+    version: 0.7.1
+  - apiVersion: v1
     appVersion: 0.7.0
     created: "2025-11-21T06:03:22.645026058Z"
     description: Helm chart for KusionStack Kuperator
@@ -1270,4 +1282,4 @@ entries:
     urls:
     - https://github.com/KusionStack/charts/releases/download/sample-operator-0.1.1/sample-operator-0.1.1.tgz
     version: 0.1.1
-generated: "2025-11-21T06:03:22.645199703Z"
+generated: "2025-11-28T08:33:47.248547966Z"
