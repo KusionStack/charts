@@ -29,7 +29,13 @@ for arg in "$@"; do
     if [[ "$os_type" == "Linux" ]]; then
         content=$(base64 -w 0 "$path")
     elif [[ "$os_type" == "Darwin" ]]; then
-        content=$(base64 -b 0 -i "$path")
+        # Check macOS version for base64 argument compatibility
+        os_version=$(uname -r | cut -d. -f1)
+        if [[ "$os_version" -ge 25 ]]; then
+            content=$(base64 -w 0 -i "$path")
+        else
+            content=$(base64 -b 0 -i "$path")
+        fi
     else
         echo "Unsupported OS: $os_type"
         exit 1
