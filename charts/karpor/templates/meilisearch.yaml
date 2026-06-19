@@ -1,0 +1,57 @@
+{{- if and (eq .Values.search.engine  "meilisearch") (not .Values.search.external.enabled ) }}
+apiVersion: v1
+kind: Service
+metadata:
+  name: meilisearch
+  namespace: {{ .Values.namespace }}
+spec:
+  ports:
+    - port: {{ .Values.meilisearch.port }}
+  selector:
+    {{- include "karpor.selectorLabels" (dict "context" . "component" .Values.meilisearch.name) | nindent 4 }}
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: meilisearch
+  namespace: {{ .Values.namespace }}
+  labels:
+    {{- include "karpor.labels" (dict "context" . "component" .Values.meilisearch.name) | nindent 4 }}
+spec:
+  replicas: {{ .Values.meilisearch.replicas }}
+  selector:
+    matchLabels:
+      {{- include "karpor.selectorLabels" (dict "context" . "component" .Values.meilisearch.name) | nindent 6 }}
+  template:
+    metadata:
+      labels:
+      {{- include "karpor.selectorLabels" (dict "context" . "component" .Values.meilisearch.name) | nindent 8 }}
+    spec:
+      volumes:
+        - emptyDir: {}
+          name: data
+      containers:
+        - name: meilisearch
+          image:  {{ include "karpor.realImage" (dict "context" . "repo" .Values.meilisearch.image.repo "tag" .Values.meilisearch.image.tag) }}
+          command:
+            - meilisearch
+            - --master-key
+            - {{ .Values.meilisearch.key}}
+            - --experimental-contains-filter
+          {{ if .Values.meilisearch.noAnalytics }}
+            - --no-analytics
+          {{ end }}
+
+          ports:
+            - containerPort: {{ .Values.meilisearch.port }}
+              protocol: TCP
+          resources:
+            {{- toYaml .Values.meilisearch.resources | nindent 12 }}
+          volumeMounts:
+            - name: data
+              mountPath: /meili_data
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          imagePullPolicy: {{ .Values.global.image.imagePullPolicy }}
+      restartPolicy: Always
+  {{- end }}

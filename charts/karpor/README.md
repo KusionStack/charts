@@ -57,6 +57,11 @@ The following table lists the configurable parameters of the chart and their def
 | namespace | string | `"karpor"` | Which namespace to be deployed. |
 | namespaceEnabled | bool | `true` | Whether to generate namespace. |
 | registryProxy | string | `""` | Image registry proxy will be the prefix as all component image. |
+| search.engine | string | `"elasticsearch"` | Engine for storage,may elasticsearch or meilisearch |
+| search.external.addresses | list | `["192.168.0.1:3456"]` | Address for search engine |
+| search.external.enabled | bool | `false` | If external is set to be true. and fill the connection information in "external" section |
+| search.external.password | string | `""` | password for search engine |
+| search.external.username | string | `""` | Username for search engine |
 
 ### Global Parameters
 
@@ -116,6 +121,19 @@ The ElasticSearch Component to store the synchronized resources and user data.
 | elasticsearch.port | int | `9200` | Port for ElasticSearch. |
 | elasticsearch.replicas | int | `1` | The number of ElasticSearch pods to run. |
 | elasticsearch.resources | object | `{"limits":{"cpu":"2","ephemeral-storage":"10Gi","memory":"4Gi"},"requests":{"cpu":"2","ephemeral-storage":"10Gi","memory":"4Gi"}}` | Resource limits and requests for the karpor elasticsearch pods. |
+
+The MeiliSearch Component to store the synchronized resources and user data.
+
+| Key | Type | Default | Description |
+|-----|------|---------|-------------|
+| meilisearch.image.repo | string | `"getmeili/meilisearch"` | Repository for meilisearch image. |
+| meilisearch.image.tag | string | `"v1.13"` | Specific tag for meilisearch image. |
+| meilisearch.key | string | `"danger!changeIt"` | Default master key |
+| meilisearch.name | string | `"meilisearch"` | Component name for meilisearch. |
+| meilisearch.noAnalytics | bool | `true` |  |
+| meilisearch.port | int | `7700` | Port for meilisearch. |
+| meilisearch.replicas | int | `1` | The number of meilisearch pods to run. |
+| meilisearch.resources | object | `{"limits":{"cpu":"2","ephemeral-storage":"10Gi","memory":"4Gi"},"requests":{"cpu":"2","ephemeral-storage":"10Gi","memory":"4Gi"}}` | Resource limits and requests for the karpor meilisearch pods. |
 
 ### ETCD
 

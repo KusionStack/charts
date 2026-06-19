@@ -95,7 +95,47 @@ syncer:
       cpu: 500m
       memory: 1Gi
       ephemeral-storage: 10Gi
+search:
+  # -- Engine for storage,may elasticsearch or meilisearch
+  engine: elasticsearch
+  external:
+    # -- If external is set to be true. and fill the connection information in "external" section
+    enabled: false
+    # -- Address for search engine
+    addresses:
+      - "192.168.0.1:3456"
+    # -- Username for search engine
+    username: ""
+    # -- password for search engine
+    password: ""
 
+# Configuration for meilisearch
+meilisearch:
+  # -- Component name for meilisearch.
+  name: meilisearch
+  # -- The number of meilisearch pods to run.
+  replicas: 1
+  # -- Port for meilisearch.
+  port: 7700
+  # -- Default master key
+  key: danger!changeIt
+  # -- If set to be true, add flag --no-analytics
+  noAnalytics: true
+  image:
+    # -- Repository for meilisearch image.
+    repo: getmeili/meilisearch
+    # -- Specific tag for meilisearch image.
+    tag: "v1.13"
+  # -- Resource limits and requests for the karpor meilisearch pods.
+  resources:
+    requests:
+      cpu: "2"
+      memory: 4Gi
+      ephemeral-storage: 10Gi
+    limits:
+      cpu: "2"
+      memory: 4Gi
+      ephemeral-storage: 10Gi
 # Configuration for ElasticSearch
 elasticsearch:
   # -- Component name for ElasticSearch.
