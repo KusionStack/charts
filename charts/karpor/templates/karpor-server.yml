@@ -1,3 +1,6 @@
+{{- if  and (  ne .Values.search.engine "elasticsearch") (ne .Values.search.engine "meilisearch") }}
+{{ fail "values.search.mode must be one of [elasticsearch,meilisearch] "}}
+{{- end }}
 apiVersion: v1
 kind: Service
 metadata:
@@ -41,9 +44,12 @@ spec:
     spec:
       containers:
         - args:
-            - --search-storage-type=elasticsearch
-            - --elastic-search-addresses=http://elasticsearch.{{ .Values.namespace }}.svc:{{ .Values.elasticsearch.port }}
-            - --etcd-servers=http://etcd.{{ .Values.namespace }}.svc:{{ .Values.etcd.port }}
+            - --search-storage-type={{.Values.search.engine}}
+            - "--search-addresses={{ include "karpor.searchURL" . }}"
+            - "--search-username={{ include "karpor.searchUsername" . }}"
+            - "--search-password={{ include "karpor.searchPassword" . }}"
+{{/*            - --elastic-search-addresses=http://elasticsearch.{{ .Values.namespace }}.svc:{{ .Values.elasticsearch.port }}*/}}
+            - "--etcd-servers=http://etcd.{{ .Values.namespace }}.svc:{{ .Values.etcd.port }}"
             - --secure-port={{ .Values.server.port }}
             - --client-ca-file=/etc/karpor/ca.crt
             - --service-account-signing-key-file=/etc/karpor/ca.key
@@ -81,7 +87,7 @@ spec:
           command:
             - /karpor
           image: {{ include "karpor.realImage" (dict "context" . "repo" .Values.server.image.repo "tag" .Values.server.image.tag "needV" (not (hasPrefix "v" .Values.server.image.tag))) }}
-          imagePullPolicy: {{ .Values.global.image.imagePullPolicy }} 
+          imagePullPolicy: {{ .Values.global.image.imagePullPolicy }}
           name: karpor-server
           ports:
             - containerPort: {{ .Values.server.port }}
