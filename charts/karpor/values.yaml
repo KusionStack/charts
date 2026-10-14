@@ -165,3 +165,21 @@ job:
     repo: kusionstack/karpor
     # -- Tag for Karpor image. Defaults to the chart's appVersion if not specified.
     tag: ""
+
+# Configuration for Ingress
+ingress:
+  # -- Whether to create an Ingress for the karpor server.
+  enabled: false
+  # -- Name of the IngressClass to use, e.g. "nginx". Leave empty to use the cluster's default IngressClass.
+  className: ""
+  # -- Annotations for the Ingress. The karpor server only serves HTTPS on `server.port`, so the ingress controller
+  # must talk HTTPS to the backend. For ingress-nginx, set `nginx.ingress.kubernetes.io/backend-protocol: "HTTPS"`.
+  annotations: {}
+  # -- Host rules for the Ingress. Each host routes its paths to the karpor server service.
+  hosts:
+    - host: karpor.example.com
+      paths:
+        - path: /
+          pathType: Prefix
+  # -- TLS settings for the Ingress, e.g. `[{"hosts": ["karpor.example.com"], "secretName": "karpor-tls"}]`.
+  tls: []

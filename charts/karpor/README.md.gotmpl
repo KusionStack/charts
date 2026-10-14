@@ -48,7 +48,7 @@ The following table lists the configurable parameters of the chart and their def
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
 {{- range .Values }}
-  {{- if not (or  (hasPrefix "global" .Key) (hasPrefix "server" .Key) (hasPrefix "syncer" .Key) (hasPrefix "elasticsearch" .Key) (hasPrefix "etcd" .Key) (hasPrefix "job" .Key) ) }}
+  {{- if not (or  (hasPrefix "global" .Key) (hasPrefix "server" .Key) (hasPrefix "syncer" .Key) (hasPrefix "elasticsearch" .Key) (hasPrefix "etcd" .Key) (hasPrefix "job" .Key) (hasPrefix "ingress" .Key) ) }}
 | {{ .Key }} | {{ .Type }} | {{ if .Default }}{{ .Default }}{{ else }}{{ .AutoDefault }}{{ end }} | {{ if .Description }}{{ .Description }}{{ else }}{{ .AutoDescription }}{{ end }} |
   {{- end }}
 {{- end }}
@@ -119,6 +119,27 @@ This one-time job is used to generate root certificates and some preliminary wor
 |-----|------|---------|-------------|
 {{- range .Values }}
   {{- if hasPrefix "job" .Key }}
+| {{ .Key }} | {{ .Type }} | {{ if .Default }}{{ .Default }}{{ else }}{{ .AutoDefault }}{{ end }} | {{ if .Description }}{{ .Description }}{{ else }}{{ .AutoDescription }}{{ end }} |
+  {{- end }}
+{{- end }}
+
+### Ingress
+
+An optional Ingress that exposes the Karpor Server. It is disabled by default. The server only serves HTTPS, so tell your ingress controller to use HTTPS for the backend. For example, with ingress-nginx:
+
+```shell
+helm install karpor-release kusionstack/karpor \
+  --set ingress.enabled=true \
+  --set ingress.className=nginx \
+  --set ingress.hosts[0].host=karpor.example.com \
+  --set ingress.hosts[0].paths[0].path=/ \
+  --set-string ingress.annotations."nginx\.ingress\.kubernetes\.io/backend-protocol"=HTTPS
+```
+
+| Key | Type | Default | Description |
+|-----|------|---------|-------------|
+{{- range .Values }}
+  {{- if hasPrefix "ingress" .Key }}
 | {{ .Key }} | {{ .Type }} | {{ if .Default }}{{ .Default }}{{ else }}{{ .AutoDefault }}{{ end }} | {{ if .Description }}{{ .Description }}{{ else }}{{ .AutoDescription }}{{ end }} |
   {{- end }}
 {{- end }}
