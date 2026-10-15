@@ -143,7 +143,7 @@ This one-time job is used to generate root certificates and some preliminary wor
 
 ### Ingress
 
-An optional Ingress that exposes the Karpor Server. It is disabled by default. The server only serves HTTPS, so tell your ingress controller to use HTTPS for the backend. For example, with ingress-nginx:
+An optional Ingress that exposes the Karpor Server. It is disabled by default and uses the `networking.k8s.io/v1` Ingress API, so it needs Kubernetes 1.19 or later. The server only serves HTTPS, so tell your ingress controller to use HTTPS for the backend. For example, with ingress-nginx:
 
 ```shell
 helm install karpor-release kusionstack/karpor \
@@ -158,7 +158,7 @@ helm install karpor-release kusionstack/karpor \
 |-----|------|---------|-------------|
 | ingress.annotations | object | `{}` | Annotations for the Ingress. The karpor server only serves HTTPS on `server.port`, so the ingress controller must talk HTTPS to the backend. For ingress-nginx, set `nginx.ingress.kubernetes.io/backend-protocol: "HTTPS"`. |
 | ingress.className | string | `""` | Name of the IngressClass to use, e.g. "nginx". Leave empty to use the cluster's default IngressClass. |
-| ingress.enabled | bool | `false` | Whether to create an Ingress for the karpor server. |
+| ingress.enabled | bool | `false` | Whether to create an Ingress for the karpor server. Uses `networking.k8s.io/v1`, so it needs Kubernetes 1.19+. |
 | ingress.hosts | list | `[{"host":"karpor.example.com","paths":[{"path":"/","pathType":"Prefix"}]}]` | Host rules for the Ingress. Each host routes its paths to the karpor server service. |
 | ingress.tls | list | `[]` | TLS settings for the Ingress, e.g. `[{"hosts": ["karpor.example.com"], "secretName": "karpor-tls"}]`. |
 
