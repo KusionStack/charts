@@ -168,7 +168,7 @@ job:
 
 # Configuration for Ingress
 ingress:
-  # -- Whether to create an Ingress for the karpor server.
+  # -- Whether to create an Ingress for the karpor server. Uses `networking.k8s.io/v1`, so it needs Kubernetes 1.19+.
   enabled: false
   # -- Name of the IngressClass to use, e.g. "nginx". Leave empty to use the cluster's default IngressClass.
   className: ""

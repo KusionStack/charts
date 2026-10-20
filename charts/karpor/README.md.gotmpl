@@ -125,7 +125,7 @@ This one-time job is used to generate root certificates and some preliminary wor
 
 ### Ingress
 
-An optional Ingress that exposes the Karpor Server. It is disabled by default. The server only serves HTTPS, so tell your ingress controller to use HTTPS for the backend. For example, with ingress-nginx:
+An optional Ingress that exposes the Karpor Server. It is disabled by default and uses the `networking.k8s.io/v1` Ingress API, so it needs Kubernetes 1.19 or later. The server only serves HTTPS, so tell your ingress controller to use HTTPS for the backend. For example, with ingress-nginx:
 
 ```shell
 helm install karpor-release kusionstack/karpor \
